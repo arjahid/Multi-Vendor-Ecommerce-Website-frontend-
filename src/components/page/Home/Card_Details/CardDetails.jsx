@@ -47,6 +47,25 @@ const CardDetails = () => {
             alert('Failed to add item to cart. Please try again.');
         });
     }
+    const handleWishList = () => {
+        console.log('Wishlist feature is not implemented yet.');
+        axios.post('http://localhost:3100/wishlist', { productId: _id,
+           productName: productName || title,
+            price: price,
+            image: image,
+            quantity: 1,
+            category: category,
+            description: description
+         })
+        .then(response => {
+            console.log('Item added to wishlist:', response.data);
+            alert('Item added to wishlist successfully!');
+        })
+        .catch(error => {
+            console.error('Error adding item to wishlist:', error);
+        });
+        // alert('Wishlist feature is coming soon!');
+    };
 
     return (
         <div className="container mx-auto px-4 py-8">
@@ -115,7 +134,7 @@ const CardDetails = () => {
                         <button onClick={() => handleCart(product)} className="btn btn-primary flex-1 hover:btn-success transition-colors duration-200">
                             Add to Cart
                         </button>
-                        <button className="btn btn-outline hover:btn-primary transition-colors duration-200">
+                        <button onClick={handleWishList} className="btn btn-outline hover:btn-primary transition-colors duration-200">
                             ♡ Wishlist
                         </button>
                     </div>

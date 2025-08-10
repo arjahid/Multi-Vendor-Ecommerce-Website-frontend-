@@ -3,12 +3,15 @@ import { FaShoppingCart } from 'react-icons/fa';
 import { IoIosSearch } from 'react-icons/io';
 import { Link, NavLink } from 'react-router-dom';
 import useCart from '../../../../Hooks/useCart';
+import { MdOutlineFavorite } from "react-icons/md";
+import useWishlist from '../../../../Hooks/useWishlist';
 
 const NavBar = () => {
   // Define the links for the navigation bar
    const [query,setQuery]=useState('');
    const [results,setResults]=useState([]);
    const {cartItems, refetch} = useCart();
+   const {wishlistItems}=useWishlist();
    
    // Real-time search as user types
    const handleInputChange = async (e) => {
@@ -101,6 +104,16 @@ const NavBar = () => {
             </div>
           </button>
       
+      </NavLink>
+    </div>
+    <div className='mr-4 text-xl font-bold'> 
+      <NavLink to="/wishlist" className="flex items-center">
+        <button className="btn">
+         <p className='text-xl'> <MdOutlineFavorite /></p>
+          <div className="badge badge-sm badge-secondary">
+            +{wishlistItems.length}
+          </div>
+        </button>
       </NavLink>
     </div>
     <a className="btn">Logout</a>
