@@ -1,0 +1,382 @@
+[
+  {
+    "_id": "689227631d16d5edfc284047",
+    "productId": "P1001",
+    "productName": "Wireless Mouse",
+    "description": "Wireless Mouse with high quality and durability.",
+    "category": "Fitness",
+    "brand": "TP-Link",
+    "price": "BDT 3733",
+    "discount": 15,
+    "stock": 160,
+    "images": [
+      "img1.jpg",
+      "img2.jpg"
+    ],
+    "vendor": {},
+    "ratings": {},
+    "shipping": {},
+    "createdAt": "2025-03-10T15:13:02.685031"
+  },
+  {
+    "_id": "689227631d16d5edfc284048",
+    "productId": "P1002",
+    "productName": "Bluetooth Headphones",
+    "description": "Bluetooth Headphones with high quality and durability.",
+    "category": "Accessories",
+    "brand": "Samsung",
+    "price": "BDT 1452",
+    "discount": 10,
+    "stock": 59,
+    "images": [
+      "img1.jpg",
+      "img2.jpg"
+    ],
+    "vendor": {},
+    "ratings": {},
+    "shipping": {},
+    "createdAt": "2024-09-13T15:13:02.685083"
+  },
+  {
+    "_id": "689227631d16d5edfc2840403",
+    "productId": "P1003",
+    "productName": "Product 3",
+    "description": "Product 3 with high quality and durability.",
+    "category": "Electronics",
+    "brand": "BrandX",
+    "price": "BDT 1300",
+    "discount": 5,
+    "stock": 103,
+    "images": [
+      "img1.jpg",
+      "img2.jpg"
+    ],
+    "vendor": {},
+    "ratings": {},
+    "shipping": {},
+    "createdAt": "2025-01-04T00:00:00"
+  },
+  {
+    "_id": "689227631d16d5edfc2840404",
+    "productId": "P1004",
+    "productName": "Product 4",
+    "description": "Product 4 with high quality and durability.",
+    "category": "Electronics",
+    "brand": "BrandX",
+    "price": "BDT 1400",
+    "discount": 5,
+    "stock": 104,
+    "images": [
+      "img1.jpg",
+      "img2.jpg"
+    ],
+    "vendor": {},
+    "ratings": {},
+    "shipping": {},
+    "createdAt": "2025-01-05T00:00:00"
+  },
+  {
+    "_id": "689227631d16d5edfc2840405",
+    "productId": "P1005",
+    "productName": "Product 5",
+    "description": "Product 5 with high quality and durability.",
+    "category": "Electronics",
+    "brand": "BrandX",
+    "price": "BDT 1500",
+    "discount": 5,
+    "stock": 105,
+    "images": [
+      "img1.jpg",
+      "img2.jpg"
+    ],
+    "vendor": {},
+    "ratings": {},
+    "shipping": {},
+    "createdAt": "2025-01-06T00:00:00"
+  },
+  {
+    "_id": "689227631d16d5edfc2840406",
+    "productId": "P1006",
+    "productName": "Product 6",
+    "description": "Product 6 with high quality and durability.",
+    "category": "Electronics",
+    "brand": "BrandX",
+    "price": "BDT 1600",
+    "discount": 5,
+    "stock": 106,
+    "images": [
+      "img1.jpg",
+      "img2.jpg"
+    ],
+    "vendor": {},
+    "ratings": {},
+    "shipping": {},
+    "createdAt": "2025-01-07T00:00:00"
+  },
+  {
+    "_id": "689227631d16d5edfc2840407",
+    "productId": "P1007",
+    "productName": "Product 7",
+    "description": "Product 7 with high quality and durability.",
+    "category": "Electronics",
+    "brand": "BrandX",
+    "price": "BDT 1700",
+    "discount": 5,
+    "stock": 107,
+    "images": [
+      "img1.jpg",
+      "img2.jpg"
+    ],
+    "vendor": {},
+    "ratings": {},
+    "shipping": {},
+    "createdAt": "2025-01-08T00:00:00"
+  },
+  {
+    "_id": "689227631d16d5edfc2840408",
+    "productId": "P1008",
+    "productName": "Product 8",
+    "description": "Product 8 with high quality and durability.",
+    "category": "Electronics",
+    "brand": "BrandX",
+    "price": "BDT 1800",
+    "discount": 5,
+    "stock": 108,
+    "images": [
+      "img1.jpg",
+      "img2.jpg"
+    ],
+    "vendor": {},
+    "ratings": {},
+    "shipping": {},
+    "createdAt": "2025-01-09T00:00:00"
+  },
+  {
+    "_id": "689227631d16d5edfc2840409",
+    "productId": "P1009",
+    "productName": "Product 9",
+    "description": "Product 9 with high quality and durability.",
+    "category": "Electronics",
+    "brand": "BrandX",
+    "price": "BDT 1900",
+    "discount": 5,
+    "stock": 109,
+    "images": [
+      "img1.jpg",
+      "img2.jpg"
+    ],
+    "vendor": {},
+    "ratings": {},
+    "shipping": {},
+    "createdAt": "2025-01-10T00:00:00"
+  },
+  {
+    "_id": "689227631d16d5edfc284040a",
+    "productId": "P1010",
+    "productName": "Product 10",
+    "description": "Product 10 with high quality and durability.",
+    "category": "Electronics",
+    "brand": "BrandX",
+    "price": "BDT 2000",
+    "discount": 5,
+    "stock": 110,
+    "images": [
+      "img1.jpg",
+      "img2.jpg"
+    ],
+    "vendor": {},
+    "ratings": {},
+    "shipping": {},
+    "createdAt": "2025-01-11T00:00:00"
+  },
+  {
+    "_id": "689227631d16d5edfc284040b",
+    "productId": "P1011",
+    "productName": "Product 11",
+    "description": "Product 11 with high quality and durability.",
+    "category": "Electronics",
+    "brand": "BrandX",
+    "price": "BDT 2100",
+    "discount": 5,
+    "stock": 111,
+    "images": [
+      "img1.jpg",
+      "img2.jpg"
+    ],
+    "vendor": {},
+    "ratings": {},
+    "shipping": {},
+    "createdAt": "2025-01-12T00:00:00"
+  },
+  {
+    "_id": "689227631d16d5edfc284040c",
+    "productId": "P1012",
+    "productName": "Product 12",
+    "description": "Product 12 with high quality and durability.",
+    "category": "Electronics",
+    "brand": "BrandX",
+    "price": "BDT 2200",
+    "discount": 5,
+    "stock": 112,
+    "images": [
+      "img1.jpg",
+      "img2.jpg"
+    ],
+    "vendor": {},
+    "ratings": {},
+    "shipping": {},
+    "createdAt": "2025-01-13T00:00:00"
+  },
+  {
+    "_id": "689227631d16d5edfc284040d",
+    "productId": "P1013",
+    "productName": "Product 13",
+    "description": "Product 13 with high quality and durability.",
+    "category": "Electronics",
+    "brand": "BrandX",
+    "price": "BDT 2300",
+    "discount": 5,
+    "stock": 113,
+    "images": [
+      "img1.jpg",
+      "img2.jpg"
+    ],
+    "vendor": {},
+    "ratings": {},
+    "shipping": {},
+    "createdAt": "2025-01-14T00:00:00"
+  },
+  {
+    "_id": "689227631d16d5edfc284040e",
+    "productId": "P1014",
+    "productName": "Product 14",
+    "description": "Product 14 with high quality and durability.",
+    "category": "Electronics",
+    "brand": "BrandX",
+    "price": "BDT 2400",
+    "discount": 5,
+    "stock": 114,
+    "images": [
+      "img1.jpg",
+      "img2.jpg"
+    ],
+    "vendor": {},
+    "ratings": {},
+    "shipping": {},
+    "createdAt": "2025-01-15T00:00:00"
+  },
+  {
+    "_id": "689227631d16d5edfc284040f",
+    "productId": "P1015",
+    "productName": "Product 15",
+    "description": "Product 15 with high quality and durability.",
+    "category": "Electronics",
+    "brand": "BrandX",
+    "price": "BDT 2500",
+    "discount": 5,
+    "stock": 115,
+    "images": [
+      "img1.jpg",
+      "img2.jpg"
+    ],
+    "vendor": {},
+    "ratings": {},
+    "shipping": {},
+    "createdAt": "2025-01-16T00:00:00"
+  },
+  {
+    "_id": "689227631d16d5edfc2840410",
+    "productId": "P1016",
+    "productName": "Product 16",
+    "description": "Product 16 with high quality and durability.",
+    "category": "Electronics",
+    "brand": "BrandX",
+    "price": "BDT 2600",
+    "discount": 5,
+    "stock": 116,
+    "images": [
+      "img1.jpg",
+      "img2.jpg"
+    ],
+    "vendor": {},
+    "ratings": {},
+    "shipping": {},
+    "createdAt": "2025-01-17T00:00:00"
+  },
+  {
+    "_id": "689227631d16d5edfc2840411",
+    "productId": "P1017",
+    "productName": "Product 17",
+    "description": "Product 17 with high quality and durability.",
+    "category": "Electronics",
+    "brand": "BrandX",
+    "price": "BDT 2700",
+    "discount": 5,
+    "stock": 117,
+    "images": [
+      "img1.jpg",
+      "img2.jpg"
+    ],
+    "vendor": {},
+    "ratings": {},
+    "shipping": {},
+    "createdAt": "2025-01-18T00:00:00"
+  },
+  {
+    "_id": "689227631d16d5edfc2840412",
+    "productId": "P1018",
+    "productName": "Product 18",
+    "description": "Product 18 with high quality and durability.",
+    "category": "Electronics",
+    "brand": "BrandX",
+    "price": "BDT 2800",
+    "discount": 5,
+    "stock": 118,
+    "images": [
+      "img1.jpg",
+      "img2.jpg"
+    ],
+    "vendor": {},
+    "ratings": {},
+    "shipping": {},
+    "createdAt": "2025-01-19T00:00:00"
+  },
+  {
+    "_id": "689227631d16d5edfc2840413",
+    "productId": "P1019",
+    "productName": "Product 19",
+    "description": "Product 19 with high quality and durability.",
+    "category": "Electronics",
+    "brand": "BrandX",
+    "price": "BDT 2900",
+    "discount": 5,
+    "stock": 119,
+    "images": [
+      "img1.jpg",
+      "img2.jpg"
+    ],
+    "vendor": {},
+    "ratings": {},
+    "shipping": {},
+    "createdAt": "2025-01-20T00:00:00"
+  },
+  {
+    "_id": "689227631d16d5edfc2840414",
+    "productId": "P1020",
+    "productName": "Product 20",
+    "description": "Product 20 with high quality and durability.",
+    "category": "Electronics",
+    "brand": "BrandX",
+    "price": "BDT 3000",
+    "discount": 5,
+    "stock": 120,
+    "images": [
+      "img1.jpg",
+      "img2.jpg"
+    ],
+    "vendor": {},
+    "ratings": {},
+    "shipping": {},
+    "createdAt": "2025-01-21T00:00:00"
+  }
+]
