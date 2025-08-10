@@ -3,10 +3,12 @@ import { useLoaderData } from 'react-router-dom';
 import NavBar from '../Navbar/NavBar';
 import axios from 'axios';
 import useCart from '../../../../Hooks/useCart';
+import useWishlist from '../../../../Hooks/useWishlist';
 
 const CardDetails = () => {
     const product = useLoaderData();
-    const { refetch } = useCart(); // Assuming you have a way to refetch cart items
+    const { refetch: refetchCart } = useCart();
+    const { refetch: refetchWishlist } = useWishlist();
     const{ _id, productName, title, price, image, category, description, rating } = product || {};
     console.log(product?._id);
     // console.log(productName);
@@ -38,7 +40,7 @@ const CardDetails = () => {
         
         axios.post('http://localhost:3100/cart', cartItem)
         .then(response => {
-            refetch(); // Refetch cart items after adding
+            refetchCart(); // Use renamed function
             console.log('Item added to cart:', response.data);
             alert('Item added to cart successfully!');
         })
@@ -58,6 +60,7 @@ const CardDetails = () => {
             description: description
          })
         .then(response => {
+            refetchWishlist(); // Use renamed function
             console.log('Item added to wishlist:', response.data);
             alert('Item added to wishlist successfully!');
         })
