@@ -11,6 +11,7 @@ import CategoryOutlet from "../../page/Home/categoryOutlet/CategoryOutlet";
 import ShopingCart from "../../page/Shop/ShopingCart";
 import Wishlist from "../../page/Home/Wishlist/Wishlist";
 import Register from "../../page/Home/register/Register";
+import Setting from "../../page/Setting/Setting";
 
 const router = createBrowserRouter([
   {
@@ -76,6 +77,10 @@ const router = createBrowserRouter([
       {
         path:'/signup',
         element:<Register></Register>
+      },
+      {
+        path:'/settings',
+        element:<Setting></Setting>
       }
 
      
