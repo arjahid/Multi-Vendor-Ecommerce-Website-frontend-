@@ -1,58 +1,86 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import NavBar from '../Navbar/NavBar';
-import { Helmet } from 'react-helmet-async';
-
+import { AuthContext } from '../../../../providers/AuthProvider';
 
 const Login = () => {
+  const navigate=useNavigate();
+  const {signIn}=useContext(AuthContext);
+  const handleForm=(e)=>{
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+
+    // Handle login logic here
+    console.log("Email:", email, "Password:", password);
+    signIn(email, password)
+      .then((result) => {
+        alert("Login successful!");
+        navigate('/'); // Redirect to home page after successful login
+
+        // Redirect or perform other actions after successful login
+      })
+      .catch((error) => {
+        console.error("Login error:", error);
+        alert("Login failed. Please check your credentials.");
+      });
+  }
     return (
         <div>
-          <Helmet>
-            <title>Login | E-Commerce Website</title>
-          </Helmet>
             <NavBar></NavBar>
-             <div className="hero bg-base-200 min-h-screen"> 
-      <div>
-        <img src="" alt="" />
-      </div>
-      <div className="hero-content flex-col lg:flex-row-reverse">
-        
-        <div className="card bg-base-100 w-full max-w-sm  shadow-2xl">
-        <div className="text-center lg:text-left">
-          <h1 className="text-5xl font-bold pl-4">Login now!</h1>
-        
-        </div>
-          <div className="card-body">
-            <form  className="fieldset">
-              <label className="label">Email</label>
-              <input
-                type="email"
-                name="email"
-                className="input"
-                placeholder="Email"
-              />
-              <label className="label">Password</label>
-              <input
-                type="password"
-                name="password"
-                className="input"
-                placeholder="Password"
-              />
-              <input
-              
-                
-                className="btn btn-neutral"
-                type="submit"
-                value="Login"
-              />
-            </form>
-            <p><small>New Here?<Link to='/signup' className="text-green-600"> create an accoutn</Link></small></p>
-          </div>
-      
-        </div>
-      </div>
-     
-    </div>
+            <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 flex items-center justify-center py-8 px-4"> 
+                <div className="w-full max-w-md mx-auto">
+                    <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+                        <div className="px-6 py-8 sm:px-8">
+                            <div className="text-center mb-8">
+                                <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">Welcome Back!</h1>
+                                <p className="text-gray-600 text-sm sm:text-base">Sign in to your account</p>
+                            </div>
+                            
+                            <form onSubmit={handleForm} className="space-y-6">
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        required
+                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition duration-200"
+                                        placeholder="Enter your email"
+                                    />
+                                </div>
+                                
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                                    <input
+                                        type="password"
+                                        name="password"
+                                        required
+                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition duration-200"
+                                        placeholder="Enter your password"
+                                    />
+                                </div>
+                                
+                                <button
+                                    type="submit"
+                                    className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-lg transition duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                                >
+                                    Sign In
+                                </button>
+                            </form>
+                            
+                            <div className="mt-6 text-center">
+                                <p className="text-sm text-gray-600">
+                                    New Here? 
+                                    <Link to='/signup' className="text-green-600 hover:text-green-500 font-medium ml-1 hover:underline">
+                                        Create an account
+                                    </Link>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };

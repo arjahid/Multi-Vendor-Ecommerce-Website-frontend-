@@ -10,6 +10,7 @@ import Category from "../../page/Home/categeory/Category";
 import CategoryOutlet from "../../page/Home/categoryOutlet/CategoryOutlet";
 import ShopingCart from "../../page/Shop/ShopingCart";
 import Wishlist from "../../page/Home/Wishlist/Wishlist";
+import Register from "../../page/Home/register/Register";
 
 const router = createBrowserRouter([
   {
@@ -71,6 +72,10 @@ const router = createBrowserRouter([
       {
         path:'/wishlist',
         element:<Wishlist></Wishlist>
+      },
+      {
+        path:'/signup',
+        element:<Register></Register>
       }
 
      
