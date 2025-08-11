@@ -1,10 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import NavBar from '../Navbar/NavBar';
+import { Helmet } from 'react-helmet-async';
+
 
 const Login = () => {
     return (
         <div>
+          <Helmet>
+            <title>Login | E-Commerce Website</title>
+          </Helmet>
             <NavBar></NavBar>
              <div className="hero bg-base-200 min-h-screen"> 
       <div>

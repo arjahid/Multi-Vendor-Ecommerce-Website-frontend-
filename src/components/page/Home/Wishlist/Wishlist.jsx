@@ -6,6 +6,18 @@ import useWishlist from '../../../../Hooks/useWishlist';
 const Wishlist = () => {
    
    const{wishlistItems,refetch}=useWishlist();
+
+
+
+
+
+
+
+
+
+
+
+   
     return (
         <div >
             <NavBar></NavBar>

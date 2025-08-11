@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import NavBar from '../Navbar/NavBar';
 import axios from 'axios';
+import { Helmet } from 'react-helmet-async';
+
 
 const Contact = () => {
     const [formData, setFormData] = useState({
@@ -40,6 +42,9 @@ const Contact = () => {
 
     return (
         <div>
+            <Helmet>
+                <title>Contact Us | E-Commerce Website</title>
+            </Helmet>
             <NavBar></NavBar>
             <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto">

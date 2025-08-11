@@ -1,9 +1,14 @@
 import React from 'react';
 import NavBar from '../Home/Navbar/NavBar';
+import { Helmet } from 'react-helmet-async';
+
 
 const About = () => {
     return (
         <div>
+            <Helmet>
+                <title>About Us | E-Commerce Website</title>
+            </Helmet>
             <NavBar></NavBar>
             <div className='max-w-6xl mx-auto px-4 py-12'>
                 <div className="text-center mb-12">

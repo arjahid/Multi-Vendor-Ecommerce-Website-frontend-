@@ -4,6 +4,7 @@ import NavBar from '../Navbar/NavBar';
 import axios from 'axios';
 import useCart from '../../../../Hooks/useCart';
 import useWishlist from '../../../../Hooks/useWishlist';
+import Swal from 'sweetalert2'
 
 const CardDetails = () => {
     const product = useLoaderData();
@@ -41,8 +42,13 @@ const CardDetails = () => {
         axios.post('http://localhost:3100/cart', cartItem)
         .then(response => {
             refetchCart(); // Use renamed function
-            console.log('Item added to cart:', response.data);
-            alert('Item added to cart successfully!');
+            console.log(`${cartItem.productName} added to cart:`, response.data);
+            Swal.fire({
+                title: "Item added to cart!",
+                icon: "success",
+                draggable: true
+            });
+
         })
         .catch(error => {
             console.error('Error adding item to cart:', error);
@@ -62,7 +68,11 @@ const CardDetails = () => {
         .then(response => {
             refetchWishlist(); // Use renamed function
             console.log('Item added to wishlist:', response.data);
-            alert('Item added to wishlist successfully!');
+             Swal.fire({
+                title: "Item added to wishlist!",
+                icon: "success",
+                draggable: true
+            });
         })
         .catch(error => {
             console.error('Error adding item to wishlist:', error);

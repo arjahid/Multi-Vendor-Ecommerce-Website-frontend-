@@ -42,9 +42,9 @@ const ProductCard = () => {
                                 <div className="card bg-white shadow-md hover:shadow-xl hover:-translate-y-1 sm:hover:-translate-y-2 transition-all duration-300 group cursor-pointer border border-gray-100 hover:border-green-300 relative overflow-hidden rounded-lg h-full">
                                     {/* Discount Badge */}
                                     {product.discount && (
-                                        <div className="absolute top-2 left-2 z-20">
-                                            <div className="badge badge-error text-white font-bold text-xs px-2 py-1">
-                                                -{product.discount}%
+                                        <div className="absolute top-3 right-2 z-20">
+                                            <div className="bg-red-500 text-white font-bold text-xs px-3 py-1 rounded-full shadow-lg">
+                                                -{product.discount}% OFF
                                             </div>
                                         </div>
                                     )}
