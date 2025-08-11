@@ -40,6 +40,9 @@ const NavBar = () => {
      e.preventDefault();
      // Search is already handled by handleInputChange
    }
+   const Scroll=()=>{
+      window.scrollTo(0, 0);
+   }
 
     const links=<>
         <li ><NavLink to="/login" >Login</NavLink></li>
@@ -60,7 +63,8 @@ const NavBar = () => {
         {links}
       </ul>
     </div>
-    <Link to='/' className="btn btn-ghost text-xl text-white hover:bg-black">EasyShop</Link>
+    <Link to='/' className="btn btn-ghost text-xl text-white hover:bg-black"
+     onClick={Scroll}>EasyShop</Link>
   </div>
   <div className="navbar-center hidden lg:flex">
     <ul className="menu menu-horizontal px-1">
