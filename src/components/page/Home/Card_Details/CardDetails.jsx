@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import NavBar from '../Navbar/NavBar';
 import axios from 'axios';
 import useCart from '../../../../Hooks/useCart';
 import useWishlist from '../../../../Hooks/useWishlist';
 import Swal from 'sweetalert2'
+import { AuthContext } from '../../../../providers/AuthProvider';
 
 const CardDetails = () => {
     const product = useLoaderData();
@@ -13,6 +14,7 @@ const CardDetails = () => {
     const{ _id, productName, title, price, image, category, description, rating } = product || {};
     console.log("product id",product?._id);
     console.log("product full data", product);
+    const {user}=useContext(AuthContext);
 
     // console.log(productName);
     
@@ -29,7 +31,22 @@ const CardDetails = () => {
     }
     
     const handleCart=(item)=>{
+        if(!user){
+            Swal.fire({
+                title: "Please login to add items to cart!",
+                icon: "warning",
+                confirmButtonText: "Login",
+                showCancelButton: true,
+                cancelButtonText: "Cancel"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '/login'; // Redirect to login page
+                }
+            });
+            return;
+        }
         const cartItem={
+            email: user?.email, // Add user email if available
             productId: _id,
             productName: productName || title,
             price: price,
@@ -58,8 +75,24 @@ const CardDetails = () => {
         });
     }
     const handleWishList = () => {
+           if(!user){
+            Swal.fire({
+                title: "Please login to add items to cart!",
+                icon: "warning",
+                confirmButtonText: "Login",
+                showCancelButton: true,
+                cancelButtonText: "Cancel"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '/login'; // Redirect to login page
+                }
+            });
+            return;
+        }
         console.log('Wishlist feature is not implemented yet.');
-        axios.post('http://localhost:3100/wishlist', { productId: _id,
+        axios.post('http://localhost:3100/wishlist', {
+            email: user?.email,
+            productId: _id,
            productName: productName || title,
             price: price,
             image: image,

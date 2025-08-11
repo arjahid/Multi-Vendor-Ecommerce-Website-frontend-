@@ -1,8 +1,12 @@
 import React, { useContext, useState } from 'react';
 import NavBar from '../Navbar/NavBar';
 import { AuthContext } from '../../../../providers/AuthProvider';
+import useCart from '../../../../Hooks/useCart';
+import useWishlist from '../../../../Hooks/useWishlist';
 
 const Profile = () => {
+  const {cartItems}=useCart();
+  const{wishlistItems}=useWishlist();
   const {user} = useContext(AuthContext);
   const [isEditing, setIsEditing] = useState(false);
   const [profileData, setProfileData] = useState({
@@ -82,7 +86,7 @@ const Profile = () => {
             </div>
           </div>
 
-          {/* Profile Information */}
+        
           <div className="bg-white rounded-2xl shadow-xl border-0 p-8 mb-8">
             <div className="flex items-center mb-8">
               <div className="w-1 h-8 bg-gradient-to-b from-green-500 to-green-700 rounded-full mr-4"></div>
@@ -90,7 +94,7 @@ const Profile = () => {
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {/* Full Name */}
+              
               <div className="group">
                 <label className="block text-sm font-semibold text-gray-700 mb-3">👤 Full Name</label>
                 {isEditing ? (
@@ -109,7 +113,7 @@ const Profile = () => {
                 )}
               </div>
 
-              {/* Email */}
+           
               <div className="group">
                 <label className="block text-sm font-semibold text-gray-700 mb-3">📧 Email Address</label>
                 <div className="bg-gradient-to-r from-gray-50 to-gray-100 px-4 py-3 rounded-xl border-2 border-gray-200">
@@ -118,7 +122,7 @@ const Profile = () => {
                 <span className="text-xs text-gray-500 mt-1 block">🔒 Email cannot be changed</span>
               </div>
 
-              {/* Phone */}
+             
               <div className="group">
                 <label className="block text-sm font-semibold text-gray-700 mb-3">📱 Phone Number</label>
                 {isEditing ? (
@@ -137,7 +141,7 @@ const Profile = () => {
                 )}
               </div>
 
-              {/* Date of Birth */}
+             
               <div className="group">
                 <label className="block text-sm font-semibold text-gray-700 mb-3">🎂 Date of Birth</label>
                 {isEditing ? (
@@ -155,7 +159,7 @@ const Profile = () => {
                 )}
               </div>
 
-              {/* Gender */}
+             
               <div className="group">
                 <label className="block text-sm font-semibold text-gray-700 mb-3">⚧ Gender</label>
                 {isEditing ? (
@@ -177,7 +181,7 @@ const Profile = () => {
                 )}
               </div>
 
-              {/* Address */}
+             
               <div className="md:col-span-2 group">
                 <label className="block text-sm font-semibold text-gray-700 mb-3">🏠 Address</label>
                 {isEditing ? (
@@ -196,7 +200,7 @@ const Profile = () => {
                 )}
               </div>
 
-              {/* Bio */}
+             
               <div className="md:col-span-2 group">
                 <label className="block text-sm font-semibold text-gray-700 mb-3">📝 Bio</label>
                 {isEditing ? (
@@ -216,7 +220,7 @@ const Profile = () => {
               </div>
             </div>
 
-            {/* Save/Cancel Buttons */}
+           
             {isEditing && (
               <div className="flex justify-end space-x-4 mt-10 pt-8 border-t-2 border-gray-100">
                 <button
@@ -235,14 +239,14 @@ const Profile = () => {
             )}
           </div>
 
-          {/* Account Statistics */}
+         
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-white rounded-2xl shadow-xl border-0 p-8 text-center transform hover:scale-105 transition-all duration-300 hover:shadow-2xl">
-              <div className="text-5xl font-bold bg-gradient-to-r from-green-500 to-green-700 bg-clip-text text-transparent mb-4">12</div>
+              <div className="text-5xl font-bold bg-gradient-to-r from-green-500 to-green-700 bg-clip-text text-transparent mb-4">{cartItems.length}</div>
               <p className="text-gray-600 font-semibold">📦 Total Orders</p>
             </div>
             <div className="bg-white rounded-2xl shadow-xl border-0 p-8 text-center transform hover:scale-105 transition-all duration-300 hover:shadow-2xl">
-              <div className="text-5xl font-bold bg-gradient-to-r from-blue-500 to-blue-700 bg-clip-text text-transparent mb-4">8</div>
+              <div className="text-5xl font-bold bg-gradient-to-r from-blue-500 to-blue-700 bg-clip-text text-transparent mb-4">{wishlistItems.length}</div>
               <p className="text-gray-600 font-semibold">💝 Wishlist Items</p>
             </div>
             <div className="bg-white rounded-2xl shadow-xl border-0 p-8 text-center transform hover:scale-105 transition-all duration-300 hover:shadow-2xl">
