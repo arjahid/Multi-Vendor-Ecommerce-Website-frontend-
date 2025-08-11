@@ -10,18 +10,18 @@ const Carosel = () => {
     const responsive = {
         desktop: {
             breakpoint: { max: 3000, min: 1024 },
-            items: 1,
-            partialVisibilityGutter: 0
+            items: 3,
+            partialVisibilityGutter: 40
         },
         tablet: {
             breakpoint: { max: 1024, min: 464 },
-            items: 1,
-            partialVisibilityGutter: 0
+            items: 2,
+            partialVisibilityGutter: 30
         },
         mobile: {
             breakpoint: { max: 464, min: 0 },
             items: 1,
-            partialVisibilityGutter: 0
+            partialVisibilityGutter: 20
         }
     };
 
@@ -38,11 +38,11 @@ const Carosel = () => {
         {
             id: 2,
             headline: "Premium Quality",
-            subtitle: "Guaranteed Excellence",
-            description: "Premium quality items carefully selected for your daily needs",
+            subtitle: "Excellence You Can Trust",
+            description: "Handpicked products from trusted brands with guaranteed satisfaction and warranty",
             image: quality,
-            bgColor: "from-green-600 to-teal-700",
-            buttonText: "Explore Quality"
+            bgColor: "from-emerald-600 to-green-700",
+            buttonText: "View Collection"
         },
         {
             id: 3,
@@ -62,16 +62,14 @@ const Carosel = () => {
                 autoPlay
                 autoPlaySpeed={5000}
                 infinite
-                arrows={false}
-                showDots={true}
+                arrows={true}
+                showDots={false}
                 containerClass="carousel-container"
-                itemClass="carousel-item"
+                itemClass="carousel-item px-2"
                 pauseOnHover
-                customDot={<CustomDot />}
-                dotListClass="custom-dot-list"
             >
                 {carouselItems.map(item => (
-                    <div key={item.id} className={`relative h-96 md:h-[500px] bg-gradient-to-r ${item.bgColor} overflow-hidden`}>
+                    <div key={item.id} className={`h-96 bg-gradient-to-r ${item.bgColor} overflow-hidden rounded-2xl shadow-lg`}>
                         {/* Background Pattern */}
                         <div className="absolute inset-0 opacity-10">
                             <div className="absolute top-0 left-0 w-40 h-40 bg-white rounded-full -translate-x-20 -translate-y-20"></div>

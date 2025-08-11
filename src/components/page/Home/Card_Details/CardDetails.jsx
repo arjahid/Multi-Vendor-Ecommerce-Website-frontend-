@@ -11,7 +11,9 @@ const CardDetails = () => {
     const { refetch: refetchCart } = useCart();
     const { refetch: refetchWishlist } = useWishlist();
     const{ _id, productName, title, price, image, category, description, rating } = product || {};
-    console.log(product?._id);
+    console.log("product id",product?._id);
+    console.log("product full data", product);
+
     // console.log(productName);
     
     if (!product) {
