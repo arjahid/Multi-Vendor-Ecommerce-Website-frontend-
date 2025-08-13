@@ -61,7 +61,7 @@ const ShopingCart = () => {
                 {/* Header */}
                 <div className="flex items-center justify-between mb-8">
                     <div className="flex items-center space-x-4">
-                        <Link to="/category" className="text-green-600 hover:text-green-700">
+                        <Link to="/" className="text-green-600 hover:text-green-700">
                             <FaArrowLeft className="text-lg" />
                         </Link>
                         <h1 className="text-3xl font-bold text-gray-900">Shopping Cart</h1>

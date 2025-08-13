@@ -1,9 +1,14 @@
 import React from 'react';
 import NavBar from '../Home/Navbar/NavBar';
+import { Helmet } from 'react-helmet-async';
+
 
 const About = () => {
     return (
         <div>
+            <Helmet>
+                <title>About Us | E-Commerce Website</title>
+            </Helmet>
             <NavBar></NavBar>
             <div className='max-w-6xl mx-auto px-4 py-12'>
                 <div className="text-center mb-12">
@@ -30,17 +35,17 @@ const About = () => {
                 </div>
 
                 <div className="grid md:grid-cols-3 gap-8 mb-16">
-                    <div className="text-center p-6 bg-white rounded-lg shadow-md">
+                    <div className="text-center p-6 bg-white rounded-lg shadow-md hover:shadow-xl hover:scale-105 hover:bg-green-50 transition-all duration-300 cursor-pointer">
                         <div className="text-4xl mb-4">🛍️</div>
                         <h3 className="text-xl font-semibold mb-2">Wide Selection</h3>
                         <p className="text-gray-600">Thousands of products across multiple categories</p>
                     </div>
-                    <div className="text-center p-6 bg-white rounded-lg shadow-md">
+                    <div className="text-center p-6 bg-white rounded-lg shadow-md hover:shadow-xl hover:scale-105 hover:bg-blue-50 transition-all duration-300 cursor-pointer">
                         <div className="text-4xl mb-4">🚚</div>
                         <h3 className="text-xl font-semibold mb-2">Fast Delivery</h3>
                         <p className="text-gray-600">Quick and reliable shipping to your doorstep</p>
                     </div>
-                    <div className="text-center p-6 bg-white rounded-lg shadow-md">
+                    <div className="text-center p-6 bg-white rounded-lg shadow-md hover:shadow-xl hover:scale-105 hover:bg-purple-50 transition-all duration-300 cursor-pointer">
                         <div className="text-4xl mb-4">💯</div>
                         <h3 className="text-xl font-semibold mb-2">Quality Assured</h3>
                         <p className="text-gray-600">100% authentic products with warranty</p>

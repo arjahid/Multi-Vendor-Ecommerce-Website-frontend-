@@ -1,9 +1,50 @@
-import React from 'react';
+import React, { useState } from 'react';
 import NavBar from '../Navbar/NavBar';
+import axios from 'axios';
+import { Helmet } from 'react-helmet-async';
+
 
 const Contact = () => {
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        message: ''
+    });
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        console.log('Form Data:', formData);
+        
+        try {
+            const response = await axios.post('http://localhost:3100/contact', formData);
+            console.log('Contact form submitted:', response.data);
+            alert('Message sent successfully!');
+            
+            // Reset form after successful submission
+            setFormData({
+                name: '',
+                email: '',
+                message: ''
+            });
+        } catch (error) {
+            console.error('Error submitting contact form:', error);
+            alert('Failed to send message. Please try again later.');
+        }
+    };
+
     return (
         <div>
+            <Helmet>
+                <title>Contact Us | E-Commerce Website</title>
+            </Helmet>
             <NavBar></NavBar>
             <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto">
@@ -35,13 +76,15 @@ const Contact = () => {
                         
                         {/* Contact Form */}
                         <div className="p-8 lg:p-12">
-                            <form className="space-y-6">
+                            <form onSubmit={handleSubmit} className="space-y-6">
                                 <div>
                                     <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">Name</label>
                                     <input 
                                         type="text" 
                                         id="name" 
                                         name="name" 
+                                        value={formData.name}
+                                        onChange={handleChange}
                                         required 
                                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition duration-200"
                                         placeholder="Your full name"
@@ -53,6 +96,8 @@ const Contact = () => {
                                         type="email" 
                                         id="email" 
                                         name="email" 
+                                        value={formData.email}
+                                        onChange={handleChange}
                                         required 
                                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition duration-200"
                                         placeholder="your.email@example.com"
@@ -63,6 +108,8 @@ const Contact = () => {
                                     <textarea 
                                         id="message" 
                                         name="message" 
+                                        value={formData.message}
+                                        onChange={handleChange}
                                         required 
                                         rows="6"
                                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition duration-200 resize-vertical"

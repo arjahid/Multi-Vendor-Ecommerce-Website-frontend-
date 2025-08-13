@@ -1,14 +1,21 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import NavBar from '../Navbar/NavBar';
 import axios from 'axios';
 import useCart from '../../../../Hooks/useCart';
+import useWishlist from '../../../../Hooks/useWishlist';
+import Swal from 'sweetalert2'
+import { AuthContext } from '../../../../providers/AuthProvider';
 
 const CardDetails = () => {
     const product = useLoaderData();
-    const { refetch } = useCart(); // Assuming you have a way to refetch cart items
+    const { refetch: refetchCart } = useCart();
+    const { refetch: refetchWishlist } = useWishlist();
     const{ _id, productName, title, price, image, category, description, rating } = product || {};
-    console.log(product?._id);
+    console.log("product id",product?._id);
+    console.log("product full data", product);
+    const {user}=useContext(AuthContext);
+
     // console.log(productName);
     
     if (!product) {
@@ -24,7 +31,22 @@ const CardDetails = () => {
     }
     
     const handleCart=(item)=>{
+        if(!user){
+            Swal.fire({
+                title: "Please login to add items to cart!",
+                icon: "warning",
+                confirmButtonText: "Login",
+                showCancelButton: true,
+                cancelButtonText: "Cancel"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '/login'; // Redirect to login page
+                }
+            });
+            return;
+        }
         const cartItem={
+            email: user?.email, // Add user email if available
             productId: _id,
             productName: productName || title,
             price: price,
@@ -38,15 +60,60 @@ const CardDetails = () => {
         
         axios.post('http://localhost:3100/cart', cartItem)
         .then(response => {
-            refetch(); // Refetch cart items after adding
-            console.log('Item added to cart:', response.data);
-            alert('Item added to cart successfully!');
+            refetchCart(); // Use renamed function
+            console.log(`${cartItem.productName} added to cart:`, response.data);
+            Swal.fire({
+                title: "Item added to cart!",
+                icon: "success",
+                draggable: true
+            });
+
         })
         .catch(error => {
             console.error('Error adding item to cart:', error);
             alert('Failed to add item to cart. Please try again.');
         });
     }
+    const handleWishList = () => {
+           if(!user){
+            Swal.fire({
+                title: "Please login to add items to cart!",
+                icon: "warning",
+                confirmButtonText: "Login",
+                showCancelButton: true,
+                cancelButtonText: "Cancel"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '/login'; // Redirect to login page
+                }
+            });
+            return;
+        }
+        console.log('Wishlist feature is not implemented yet.');
+        axios.post('http://localhost:3100/wishlist', {
+            email: user?.email,
+            productId: _id,
+           productName: productName || title,
+            price: price,
+            image: image,
+            quantity: 1,
+            category: category,
+            description: description
+         })
+        .then(response => {
+            refetchWishlist(); // Use renamed function
+            console.log('Item added to wishlist:', response.data);
+             Swal.fire({
+                title: "Item added to wishlist!",
+                icon: "success",
+                draggable: true
+            });
+        })
+        .catch(error => {
+            console.error('Error adding item to wishlist:', error);
+        });
+        // alert('Wishlist feature is coming soon!');
+    };
 
     return (
         <div className="container mx-auto px-4 py-8">
@@ -115,7 +182,7 @@ const CardDetails = () => {
                         <button onClick={() => handleCart(product)} className="btn btn-primary flex-1 hover:btn-success transition-colors duration-200">
                             Add to Cart
                         </button>
-                        <button className="btn btn-outline hover:btn-primary transition-colors duration-200">
+                        <button onClick={handleWishList} className="btn btn-outline hover:btn-primary transition-colors duration-200">
                             ♡ Wishlist
                         </button>
                     </div>
