@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import NavBar from '../Navbar/NavBar';
 import useAxiosPublic from '../../../../Hooks/useAxiousPublic';
@@ -6,6 +6,7 @@ import { AuthContext } from '../../../../providers/AuthProvider';
 
 
 const Register = () => {
+  
     const axiosPublic = useAxiosPublic();
     const navigate = useNavigate();
     const authContext = useContext(AuthContext);
@@ -36,6 +37,7 @@ const Register = () => {
         const form = e.target;
         const name = form.name.value;
         const email = form.email.value;
+        const gender = form.gender.value;
         const password = form.password.value;
         const confirmPassword = form.confirmPassword.value;
        
@@ -46,26 +48,54 @@ const Register = () => {
         }
 
         // Handle registration logic here
-        console.log("Name:", name, "Email:", email, "Password:", password);
-        createUser(email, password) // Use createUser instead of signIn
+        createUser(email, password)
         .then((result) => {
-            alert("Registration successful!");
+            const loggedUser = result.user;
+            console.log("Firebase user created:", loggedUser);
+            
             const userInfo = {
                 name: name,
-                email: email
-            }
-            axiosPublic.post('/users',userInfo)
-            .then(data => {
-                console.log('User data saved:', data.data);
+                email: email,
+                gender: gender,
+                role: 'customer',
+                uid: loggedUser.uid,
+                createdAt: new Date().toISOString()
+            };
+            
+            
+            
+           
+            axiosPublic.post('/users', userInfo)
+            .then(response => {
+                console.log('User data saved successfully:', response.data);
+                alert("Registration successful!");
+                resetForm(form);
+                navigate('/login');
             })
             .catch(error => {
                 console.error('Error saving user data:', error);
+                console.error('Error details:', error.response?.data);
+                alert('Registration successful but failed to save additional data. You can still login.');
+                navigate('/login');
             });
-            navigate('/login');
         })
         .catch((error) => {
             console.error("Registration error:", error);
-            alert("Registration failed. Please try again.");
+            console.error("Error code:", error.code);
+            console.error("Error message:", error.message);
+            
+            let errorMessage = "Registration failed. ";
+            if (error.code === 'auth/email-already-in-use') {
+                errorMessage += "This email is already registered.";
+            } else if (error.code === 'auth/weak-password') {
+                errorMessage += "Password is too weak.";
+            } else if (error.code === 'auth/invalid-email') {
+                errorMessage += "Invalid email address.";
+            } else {
+                errorMessage += "Please try again.";
+            }
+            
+            alert(errorMessage);
         });
     }
 
@@ -102,6 +132,20 @@ const Register = () => {
                                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition duration-200"
                                         placeholder="Enter your email"
                                     />
+                                </div>
+                                
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">Gender</label>
+                                    <select
+                                        name="gender"
+                                        required
+                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition duration-200"
+                                    >
+                                        <option value="">Select your gender</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                        <option value="other">Other</option>
+                                    </select>
                                 </div>
                                 
                                 <div>

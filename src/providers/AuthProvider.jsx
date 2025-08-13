@@ -43,23 +43,23 @@ const AuthProvider = ({ children }) => {
     }
     useEffect(()=>{
         const unscribe=onAuthStateChanged(auth,(currentUSer)=>{
-            console.log('Current User:', currentUSer);
+            // console.log('Current User:', currentUSer);
             setUser(currentUSer);
-            if(currentUSer){
-                const userInfo={
-                    email:currentUSer.email,
-                    name:currentUSer.displayName,
-                    photoURL:currentUSer.photoURL
-                }
-                axiousPublic.post('/users',userInfo)
-                .then(data=>{
-                    console.log('User data saved:', data.data);
-                })
-                .catch(error=>{
-                    console.error('Error saving user data:', error);
-                }
-                );
-            }
+            // if(currentUSer){
+            //     const userInfo={
+            //         email:currentUSer.email,
+            //         name:currentUSer.displayName,
+            //         photoURL:currentUSer.photoURL
+            //     }
+            //     axiousPublic.post('/users',userInfo)
+            //     .then(data=>{
+            //         console.log('User data saved:', data.data);
+            //     })
+            //     .catch(error=>{
+            //         console.error('Error saving user data:', error);
+            //     }
+            //     );
+            // }
             setLoading(false);
         })
         return () => unscribe();

@@ -12,6 +12,8 @@ import ShopingCart from "../../page/Shop/ShopingCart";
 import Wishlist from "../../page/Home/Wishlist/Wishlist";
 import Register from "../../page/Home/register/Register";
 import Setting from "../../page/Setting/Setting";
+import Dashboard from "../../page/Home/Navbar/Dashboard/Dashboard";
+import UserHome from "../../page/Home/Navbar/Dashboard/UserHome";
 
 const router = createBrowserRouter([
   {
@@ -81,11 +83,23 @@ const router = createBrowserRouter([
       {
         path:'/settings',
         element:<Setting></Setting>
-      }
+      },
+
 
      
     ],
+    
   },
+  {
+    path:'/dashboard',
+    element:<Dashboard></Dashboard>,
+    children:[
+      {
+        path:'/dashboard/userHome',
+        element:<UserHome></UserHome>
+      }
+    ]
+  }
 ]);
 
 export default router;
