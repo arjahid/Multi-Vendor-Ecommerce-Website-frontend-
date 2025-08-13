@@ -23,8 +23,9 @@ const ManageUser = () => {
     // Toggle Admin Role
     const handleToggleAdmin = async (user) => {
         try {
-            await axiosPublic.patch(`/users/${user._id}`, {
-                role: user.role === "admin" ? "customer" : "admin",
+            const newRole = user.role === "admin" ? "customer" : "admin";
+            await axiosPublic.patch(`/users/admin/${user.email}`, {
+                role: newRole,
             });
             alert("User role updated!");
             window.location.reload(); // refresh the page
