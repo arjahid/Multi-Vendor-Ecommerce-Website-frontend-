@@ -85,6 +85,18 @@ const NavBar = () => {
         </li>
         <li>
           <NavLink 
+            to="/add-product" 
+            className={({ isActive }) => 
+              `px-3 py-2 rounded-lg transition-all duration-300 hover:bg-white hover:bg-opacity-20 ${
+                isActive ? 'bg-white bg-opacity-25 text-white font-semibold' : 'text-white'
+              }`
+            }
+          >
+            Add-Product
+          </NavLink>
+        </li>
+        <li>
+          <NavLink 
             to="/about" 
             className={({ isActive }) => 
               `px-3 py-2 rounded-lg transition-all duration-300 hover:bg-white hover:bg-opacity-20 ${

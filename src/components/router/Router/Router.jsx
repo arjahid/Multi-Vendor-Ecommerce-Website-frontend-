@@ -16,6 +16,7 @@ import Dashboard from "../../page/Home/Navbar/Dashboard/Dashboard";
 import UserHome from "../../page/Home/Navbar/Dashboard/UserHome";
 import ManageUser from "../../page/Home/Navbar/Dashboard/Admin/ManageUser";
 import PrivateRouter from "./privateRouter";
+import AddProduct from "../../page/Home/AddProduct/AddProduct";
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
       {
         path: "/about",
         element: <About />,
+      },
+      {
+        path:'/add-product',
+        element:<PrivateRouter><AddProduct></AddProduct></PrivateRouter>
       },
       {
         path: "/product/:id",
@@ -99,7 +104,7 @@ const router = createBrowserRouter([
         element: <UserHome></UserHome>,
       },
       {
-        path: "dashboard/admin/users",
+        path: "admin/users",
         element: <PrivateRouter><ManageUser></ManageUser></PrivateRouter>,
       },
     ],
