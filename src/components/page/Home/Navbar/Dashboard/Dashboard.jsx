@@ -5,15 +5,16 @@ import NavBar from '../../Navbar/NavBar';
 import { Links, NavLink } from 'react-router-dom';
 import useCart from '../../../../../Hooks/useCart';
 import useWishlist from '../../../../../Hooks/useWishlist';
+import useAllUsers from '../../../../../Hooks/allUser';
+import AllProducts from '../../../../../Hooks/All_Products';
 
 const Dashboard = () => {
     const {user} = useContext(AuthContext);
     const {isAdmin, isAdminLoading} = useAdmin();
     const {cartItems}=useCart()
     const {wishlistItems}=useWishlist();
-    console.log('user in Dashboard:', isAdmin);
-    console.log('isAdminLoading:', isAdminLoading);
-    console.log('user email:', user?.email);
+    const{users,loading}=useAllUsers()
+    const {products}=AllProducts();
     
     if (isAdminLoading) {
         return (
@@ -54,8 +55,8 @@ const Dashboard = () => {
                             <h2 className="text-xl font-semibold mb-4">Quick Stats</h2>
                             {isAdmin ? (
                                 <div className="space-y-2">
-                                    <p><strong>Total Users:</strong> 156</p>
-                                    <p><strong>Total Products:</strong> 89</p>
+                                    <p><strong>Total Users:</strong> {users.length}</p>
+                                    <p><strong>Total Products:</strong> {products.length}</p>
                                     <p><strong>Pending Orders:</strong> 23</p>
                                 </div>
                             ) : (
@@ -73,11 +74,11 @@ const Dashboard = () => {
                         <div className="bg-white p-6 rounded-lg shadow-lg mb-8">
                             <h2 className="text-2xl font-semibold mb-6">Admin Management</h2>
                             <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                                <button className="p-4 bg-blue-50 hover:bg-blue-100 rounded-lg text-center transition-colors duration-200">
+                                <NavLink to='dashboard/admin/users' className="p-4 bg-blue-50 hover:bg-blue-100 rounded-lg text-center transition-colors duration-200">
                                     <div className="text-3xl mb-2">👥</div>
-                                    <h3 className="font-semibold text-blue-800">Manage Users</h3>
+                                    <h3 className="font-semibold text-blue-800">Manage Users ({users.length})</h3>
                                     <p className="text-sm text-gray-600">View and manage user accounts</p>
-                                </button>
+                                </NavLink>
                                 <button className="p-4 bg-green-50 hover:bg-green-100 rounded-lg text-center transition-colors duration-200">
                                     <div className="text-3xl mb-2">📦</div>
                                     <h3 className="font-semibold text-green-800">Manage Products</h3>

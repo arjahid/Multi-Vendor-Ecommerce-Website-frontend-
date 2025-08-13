@@ -14,6 +14,8 @@ import Register from "../../page/Home/register/Register";
 import Setting from "../../page/Setting/Setting";
 import Dashboard from "../../page/Home/Navbar/Dashboard/Dashboard";
 import UserHome from "../../page/Home/Navbar/Dashboard/UserHome";
+import ManageUser from "../../page/Home/Navbar/Dashboard/Admin/ManageUser";
+import PrivateRouter from "./privateRouter";
 
 const router = createBrowserRouter([
   {
@@ -34,7 +36,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/profile",
-        element: <Profile />,
+        element: <PrivateRouter><Profile /></PrivateRouter>,
       },
       {
         path: "/about",
@@ -45,7 +47,9 @@ const router = createBrowserRouter([
         element: <CardDetails />,
         loader: async ({ params }) => {
           try {
-            const res = await fetch(`http://localhost:3100/products/${params.id}`);
+            const res = await fetch(
+              `http://localhost:3100/products/${params.id}`
+            );
             if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
             const text = await res.text();
             if (!text) return null;
@@ -57,49 +61,49 @@ const router = createBrowserRouter([
         },
       },
       {
-        path:'/products/:category',
-        element:<CategoryOutlet></CategoryOutlet>,
-        loader:async ({params})=>{
-          const rea=await fetch(`http://localhost:3100/products/${params.category}`);
+        path: "/products/:category",
+        element: <CategoryOutlet></CategoryOutlet>,
+        loader: async ({ params }) => {
+          const rea = await fetch(
+            `http://localhost:3100/products/${params.category}`
+          );
           if (!rea.ok) {
             throw new Error("Failed to fetch products for category");
           }
-        
-          
-        }
+        },
       },
       {
-        path:'/cart',
-        element:<ShopingCart></ShopingCart>
+        path: "/cart",
+        element: <PrivateRouter><ShopingCart></ShopingCart></PrivateRouter>,
       },
       {
-        path:'/wishlist',
-        element:<Wishlist></Wishlist>
+        path: "/wishlist",
+        element: <PrivateRouter><Wishlist></Wishlist></PrivateRouter>,
       },
       {
-        path:'/signup',
-        element:<Register></Register>
+        path: "/signup",
+        element: <Register></Register>,
       },
       {
-        path:'/settings',
-        element:<Setting></Setting>
+        path: "/settings",
+        element: <PrivateRouter><Setting></Setting></PrivateRouter>,
       },
-
-
-     
     ],
-    
   },
   {
-    path:'/dashboard',
-    element:<Dashboard></Dashboard>,
-    children:[
+    path: "/dashboard",
+    element: <PrivateRouter><Dashboard></Dashboard></PrivateRouter>,
+    children: [
       {
-        path:'/dashboard/userHome',
-        element:<UserHome></UserHome>
-      }
-    ]
-  }
+        path: "userHome",
+        element: <UserHome></UserHome>,
+      },
+      {
+        path: "dashboard/admin/users",
+        element: <PrivateRouter><ManageUser></ManageUser></PrivateRouter>,
+      },
+    ],
+  },
 ]);
 
 export default router;
