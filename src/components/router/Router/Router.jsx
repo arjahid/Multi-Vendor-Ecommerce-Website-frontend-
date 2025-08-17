@@ -17,6 +17,8 @@ import UserHome from "../../page/Home/Navbar/Dashboard/UserHome";
 import ManageUser from "../../page/Home/Navbar/Dashboard/Admin/ManageUser";
 import PrivateRouter from "./privateRouter";
 import AddProduct from "../../page/Home/AddProduct/AddProduct";
+import Test from "../../page/test/test";
+
 
 const router = createBrowserRouter([
   {
@@ -80,6 +82,10 @@ const router = createBrowserRouter([
       {
         path: "/cart",
         element: <PrivateRouter><ShopingCart></ShopingCart></PrivateRouter>,
+      },
+      {
+        path: "/test",
+        element: <PrivateRouter><Test></Test></PrivateRouter>,
       },
       {
         path: "/wishlist",

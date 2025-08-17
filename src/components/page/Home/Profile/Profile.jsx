@@ -3,12 +3,18 @@ import NavBar from '../Navbar/NavBar';
 import { AuthContext } from '../../../../providers/AuthProvider';
 import useCart from '../../../../Hooks/useCart';
 import useWishlist from '../../../../Hooks/useWishlist';
+import axios from 'axios';
+import useAxiosPublic from '../../../../Hooks/useAxiousPublic';
 
 const Profile = () => {
   const {cartItems}=useCart();
   const{wishlistItems}=useWishlist();
   const {user} = useContext(AuthContext);
   const [isEditing, setIsEditing] = useState(false);
+  const [vendorStatus,setVendorStatus]=useState(user?.vendorStatus || 'Not a vendor');
+  const [loading, setLoading] = useState(false);
+  const [message,setMessage]=useState('');
+  const axiosPublic=useAxiosPublic();
   const [profileData, setProfileData] = useState({
     name: user?.displayName || '',
     email: user?.email || '',
@@ -18,6 +24,7 @@ const Profile = () => {
     gender: '',
     bio: ''
   });
+  
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -47,6 +54,7 @@ const Profile = () => {
     });
     setIsEditing(false);
   };
+  
 
   return (
     <div>
@@ -83,7 +91,11 @@ const Profile = () => {
               >
                 {isEditing ? '✕ Cancel' : '✏️ Edit Profile'}
               </button>
+              <button>
+                <span className="text-sm text-gray-500">Role :{user?.role || 'Not assigned'}</span>
+              </button>
             </div>
+            
           </div>
 
         
@@ -112,6 +124,7 @@ const Profile = () => {
                   </div>
                 )}
               </div>
+              
 
            
               <div className="group">
