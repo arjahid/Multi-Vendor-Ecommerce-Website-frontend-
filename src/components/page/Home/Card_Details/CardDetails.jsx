@@ -50,7 +50,7 @@ const CardDetails = () => {
             productId: _id,
             productName: productName || title,
             price: price,
-            image: image,
+            image: image || product.images, // Use product.images if available
             quantity: 1,
             category: category,
             description: description
@@ -121,7 +121,7 @@ const CardDetails = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-7">
                 <div>
                     <img 
-                        src={product.image} 
+                        src={product.images} 
                         alt={product.title} 
                         className="w-full h-96 object-cover rounded-lg shadow-lg"
                     />
@@ -147,9 +147,9 @@ const CardDetails = () => {
                     {/* Price */}
                     <div className="bg-gray-50 p-4 rounded-lg">
                         <p className="text-3xl font-bold text-green-600 mb-2">
-                            ${product.price}
+                            <span className='text-xxl font-bold'>৳</span> {product.price}
                         </p>
-                        <p className="text-sm text-gray-600">Free shipping on orders over $50</p>
+                        <p className="text-sm text-gray-600">Free shipping on orders over ৳50</p>
                     </div>
                     
                     {/* Description */}

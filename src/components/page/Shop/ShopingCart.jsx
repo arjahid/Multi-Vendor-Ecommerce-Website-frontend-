@@ -45,11 +45,18 @@ const ShopingCart = () => {
 
 
     const getTotalPrice = () => {
-        return cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
+        return cartItems.reduce((total, item) => {
+            const itemPrice = parseFloat(item.price) || 0;
+            const itemQuantity = parseInt(item.quantity) || 0;
+            return total + (itemPrice * itemQuantity);
+        }, 0);
     };
 
     const getTotalItems = () => {
-        return cartItems.reduce((total, item) => total + item.quantity, 0);
+        return cartItems.reduce((total, item) => {
+            const itemQuantity = parseInt(item.quantity) || 0;
+            return total + itemQuantity;
+        }, 0);
     };
     
    
@@ -129,7 +136,7 @@ const ShopingCart = () => {
                                         {/* Item Total */}
                                         <div className="text-right min-w-24">
                                             <p className="text-xl font-bold text-gray-900">
-                                                BDT {(item.price * item.quantity).toLocaleString()}
+                                                ৳{((parseFloat(item.price) || 0) * (parseInt(item.quantity) || 0)).toLocaleString()}
                                             </p>
                                         </div>
 
@@ -148,40 +155,44 @@ const ShopingCart = () => {
                         {/* Order Summary */}
                         <div className="lg:col-span-1">
                             <div className="bg-white rounded-lg shadow-sm border p-6 sticky top-8">
-                                <h2 className="text-2xl font-bold mb-6">Order Summary</h2>
+                                <h2 className="text-2xl font-bold mb-6 text-gray-800">Order Summary</h2>
                                 
                                 <div className="space-y-4 mb-6">
-                                    <div className="flex justify-between text-lg">
+                                    <div className="flex justify-between py-2">
                                         <span className="text-gray-600">Subtotal ({getTotalItems()} items)</span>
-                                        <span className="font-semibold">BDT {getTotalPrice().toLocaleString()}</span>
+                                        <span className="font-semibold text-gray-800">৳{getTotalPrice().toLocaleString()}</span>
                                     </div>
-                                    <div className="flex justify-between">
-                                        <span className="text-gray-600">Shipping</span>
+                                    
+                                    <div className="flex justify-between py-2">
+                                        <span className="text-gray-600">Delivery Fee</span>
                                         <span className="font-semibold text-green-600">Free</span>
                                     </div>
-                                    <div className="flex justify-between">
-                                        <span className="text-gray-600">Tax (5%)</span>
-                                        <span className="font-semibold">BDT {Math.round(getTotalPrice() * 0.05).toLocaleString()}</span>
+                                    
+                                    <div className="flex justify-between py-2">
+                                        <span className="text-gray-600">Discount</span>
+                                        <span className="font-semibold text-red-600">-৳0</span>
                                     </div>
-                                    <hr className="border-gray-200" />
-                                    <div className="flex justify-between text-xl font-bold">
-                                        <span>Total</span>
-                                        <span className="text-green-600">
-                                            BDT {(getTotalPrice() + Math.round(getTotalPrice() * 0.05)).toLocaleString()}
-                                        </span>
+                                    
+                                    <hr className="border-gray-300" />
+                                    
+                                    <div className="flex justify-between py-3 text-xl font-bold">
+                                        <span className="text-gray-800">Total</span>
+                                        <span className="text-green-600">৳{getTotalPrice().toLocaleString()}</span>
                                     </div>
                                 </div>
 
-                                <button className="w-full bg-green-600 text-white py-4 px-6 rounded-lg hover:bg-green-700 transition-colors mb-4 font-semibold text-lg">
-                                    Proceed to Checkout
-                                </button>
-                                
-                                <Link 
-                                    to="/" 
-                                    className="w-full block text-center bg-gray-100 text-gray-700 py-3 px-6 rounded-lg hover:bg-gray-200 transition-colors"
-                                >
-                                    Continue Shopping
-                                </Link>
+                                <div className="space-y-3">
+                                    <button className="w-full bg-gradient-to-r from-green-600 to-green-700 text-white py-4 px-6 rounded-lg hover:from-green-700 hover:to-green-800 transition-all duration-300 font-semibold text-lg shadow-lg hover:shadow-xl transform hover:scale-105">
+                                        Proceed to Checkout
+                                    </button>
+                                    
+                                    <Link 
+                                        to="/" 
+                                        className="w-full block text-center bg-gray-100 text-gray-700 py-3 px-6 rounded-lg hover:bg-gray-200 transition-colors duration-300 font-medium"
+                                    >
+                                        Continue Shopping
+                                    </Link>
+                                </div>
                             </div>
                         </div>
                     </div>

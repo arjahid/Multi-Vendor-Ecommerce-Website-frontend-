@@ -63,7 +63,7 @@ const ProductCard = () => {
 
                   <figure className="overflow-hidden bg-gray-100 relative">
                     <img
-                      src={product.image || "/placeholder-image.jpg"}
+                      src={product.images || "/placeholder-image.jpg"}
                       alt={product.title || "Product"}
                       className="w-full h-20 xs:h-24 sm:h-28 md:h-32 lg:h-36 object-cover group-hover:scale-105 transition-transform duration-300"
                     />

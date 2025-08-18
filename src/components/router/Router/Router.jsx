@@ -14,7 +14,7 @@ import Register from "../../page/Home/register/Register";
 import Setting from "../../page/Setting/Setting";
 import Dashboard from "../../page/Home/Navbar/Dashboard/Dashboard";
 import UserHome from "../../page/Home/Navbar/Dashboard/UserHome";
-import ManageUser from "../../page/Home/Navbar/Dashboard/Admin/ManageUser";
+import ManageUser from "../../page/Home/Navbar/Dashboard/Admin/ManageUser";  
 import PrivateRouter from "./privateRouter";
 import AddProduct from "../../page/Home/AddProduct/AddProduct";
 import Test from "../../page/test/test";
