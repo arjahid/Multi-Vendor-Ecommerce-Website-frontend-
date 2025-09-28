@@ -224,19 +224,9 @@ const Dashboard = () => {
                   {!collapsed && <span>View Orders</span>}
                 </button>
 
-                {/* <NavLink
-                                    to="/admin/analytics"
-                                    className={({ isActive }) =>
-                                        `flex items-center gap-3 p-3 rounded-lg bg-orange-50 hover:bg-orange-100 transition ${
-                                            isActive ? 'bg-orange-200 font-semibold' : ''
-                                        }`
-                                    }
-                                >
-                                    <span className="text-xl">📊</span>
-                                    {!collapsed && <span>Analytics</span>}
-                                </NavLink> */}
+              
                 <NavLink
-                  to="admin/analytics" // remove the leading slash
+                  to="admin/analytics"
                   className={({ isActive }) =>
                     `flex items-center gap-3 p-3 rounded-lg bg-orange-50 hover:bg-orange-100 transition ${
                       isActive ? "bg-orange-200 font-semibold" : ""
