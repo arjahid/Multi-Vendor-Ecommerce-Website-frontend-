@@ -15,7 +15,7 @@
 //     const {wishlistItems}=useWishlist();
 //     const{users,loading}=useAllUsers()
 //     const {products}=AllProducts();
-    
+
 //     if (isAdminLoading) {
 //         return (
 //             <div>
@@ -29,7 +29,7 @@
 //             </div>
 //         );
 //     }
-    
+
 //     return (
 //         <div>
 //             <NavBar />
@@ -38,7 +38,7 @@
 //                     <h1 className="text-4xl font-bold mb-8 text-center">
 //                         {isAdmin ? 'Admin Dashboard' : 'User Dashboard'}
 //                     </h1>
-                     
+
 //                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
 //                         <div className="bg-white p-6 rounded-lg shadow-lg">
 //                             <h2 className="text-xl font-semibold mb-4">Welcome Back!</h2>
@@ -50,7 +50,7 @@
 //                                 </span>
 //                             </div>
 //                         </div>
-                        
+
 //                         <div className="bg-white p-6 rounded-lg shadow-lg">
 //                             <h2 className="text-xl font-semibold mb-4">Quick Stats</h2>
 //                             {isAdmin ? (
@@ -68,7 +68,7 @@
 //                             )}
 //                         </div>
 //                     </div>
-                    
+
 //                     {/* Admin Options */}
 //                     {isAdmin && (
 //                         <div className="bg-white p-6 rounded-lg shadow-lg mb-8">
@@ -97,7 +97,7 @@
 //                             </div>
 //                         </div>
 //                     )}
-                    
+
 //                     {/* User Options */}
 //                     {!isAdmin && (
 //                         <div className="bg-white p-6 rounded-lg shadow-lg">
@@ -136,160 +136,187 @@
 // };
 
 // export default Dashboard;
-import React, { useContext, useState } from 'react';
-import { AuthContext } from '../../../../../providers/AuthProvider';
-import useAdmin from '../../../../../Hooks/useAdmin';
-import NavBar from '../../Navbar/NavBar';
-import { NavLink, Outlet } from 'react-router-dom';
-import useCart from '../../../../../Hooks/useCart';
-import useWishlist from '../../../../../Hooks/useWishlist';
-import useAllUsers from '../../../../../Hooks/allUser';
-import AllProducts from '../../../../../Hooks/All_Products';
+import React, { useContext, useState } from "react";
+import { AuthContext } from "../../../../../providers/AuthProvider";
+import useAdmin from "../../../../../Hooks/useAdmin";
+import NavBar from "../../Navbar/NavBar";
+import { NavLink, Outlet } from "react-router-dom";
+import useCart from "../../../../../Hooks/useCart";
+import useWishlist from "../../../../../Hooks/useWishlist";
+import useAllUsers from "../../../../../Hooks/allUser";
+import AllProducts from "../../../../../Hooks/All_Products";
+import Analytics from "./Analytics";
 
 const Dashboard = () => {
-    const { user } = useContext(AuthContext);
-    const { isAdmin, isAdminLoading } = useAdmin();
-    const { cartItems } = useCart();
-    const { wishlistItems } = useWishlist();
-    const { users } = useAllUsers();
-    const { products } = AllProducts();
-    const [collapsed, setCollapsed] = useState(false); // sidebar toggle
+  const { user } = useContext(AuthContext);
+  const { isAdmin, isAdminLoading } = useAdmin();
+  const { cartItems } = useCart();
+  const { wishlistItems } = useWishlist();
+  const { users } = useAllUsers();
+  const { products } = AllProducts();
+  const [collapsed, setCollapsed] = useState(false); // sidebar toggle
 
-    if (isAdminLoading) {
-        return (
-            <div>
-                <NavBar />
-                <div className="flex items-center justify-center min-h-screen">
-                    <div className="text-center">
-                        <div className="loading loading-spinner loading-lg"></div>
-                        <p className="mt-4">Loading admin status...</p>
-                    </div>
-                </div>
-            </div>
-        );
-    }
-
+  if (isAdminLoading) {
     return (
-        <div className="flex flex-col min-h-screen">
-            <NavBar />
+      <div>
+        <NavBar />
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="text-center">
+            <div className="loading loading-spinner loading-lg"></div>
+            <p className="mt-4">Loading admin status...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
-            <div className="flex flex-1 bg-gray-50">
-                {/* Sidebar */}
-                <aside
-                    className={`bg-white shadow-lg p-6 flex flex-col transition-all duration-300 ${
-                        collapsed ? 'w-20' : 'w-64'
-                    }`}
+  return (
+    <div className="flex flex-col min-h-screen">
+      <NavBar />
+      <div className="flex flex-1 bg-gray-50">
+        {/* Sidebar */}
+        <aside
+          className={`bg-white shadow-lg p-6 flex flex-col transition-all duration-300 ${
+            collapsed ? "w-20" : "w-64"
+          }`}
+        >
+          {/* Collapse Button */}
+          <button
+            onClick={() => setCollapsed(!collapsed)}
+            className="mb-6 p-2 bg-gray-200 rounded-full hover:bg-gray-300 transition self-end"
+          >
+            {collapsed ? "➡️" : "⬅️"}
+          </button>
+
+          {/* Role Info */}
+          {!collapsed && (
+            <div className="bg-gray-100 p-4 rounded-lg text-center mb-6">
+              <p className="font-semibold">{user?.email}</p>
+              <p className="text-sm">
+                {isAdmin ? "Administrator" : "Customer"}
+              </p>
+            </div>
+          )}
+
+          {/* Nav Links */}
+          <div className="flex flex-col space-y-2">
+            {isAdmin ? (
+              <>
+                <NavLink
+                  to="admin/users"
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 p-3 rounded-lg hover:bg-blue-100 transition ${
+                      isActive ? "bg-blue-200 font-semibold" : "bg-blue-50"
+                    }`
+                  }
                 >
-                    {/* Collapse Button */}
-                    <button
-                        onClick={() => setCollapsed(!collapsed)}
-                        className="mb-6 p-2 bg-gray-200 rounded-full hover:bg-gray-300 transition self-end"
-                    >
-                        {collapsed ? '➡️' : '⬅️'}
-                    </button>
+                  <span className="text-xl">👥</span>
+                  {!collapsed && <span>Manage Users ({users.length})</span>}
+                </NavLink>
 
-                    {/* Role Info */}
-                    {!collapsed && (
-                        <div className="bg-gray-100 p-4 rounded-lg text-center mb-6">
-                            <p className="font-semibold">{user?.email}</p>
-                            <p className="text-sm">{isAdmin ? 'Administrator' : 'Customer'}</p>
-                        </div>
-                    )}
+                <button className="flex items-center gap-3 p-3 rounded-lg bg-green-50 hover:bg-green-100 transition">
+                  <span className="text-xl">📦</span>
+                  {!collapsed && <span>Manage Products</span>}
+                </button>
 
-                    {/* Nav Links */}
-                    <div className="flex flex-col space-y-2">
-                        {isAdmin ? (
-                            <>
-                                <NavLink
-                                    to="admin/users"
+                <button className="flex items-center gap-3 p-3 rounded-lg bg-purple-50 hover:bg-purple-100 transition">
+                  <span className="text-xl">📋</span>
+                  {!collapsed && <span>View Orders</span>}
+                </button>
+
+                {/* <NavLink
+                                    to="/admin/analytics"
                                     className={({ isActive }) =>
-                                        `flex items-center gap-3 p-3 rounded-lg hover:bg-blue-100 transition ${
-                                            isActive ? 'bg-blue-200 font-semibold' : 'bg-blue-50'
+                                        `flex items-center gap-3 p-3 rounded-lg bg-orange-50 hover:bg-orange-100 transition ${
+                                            isActive ? 'bg-orange-200 font-semibold' : ''
                                         }`
                                     }
                                 >
-                                    <span className="text-xl">👥</span>
-                                    {!collapsed && <span>Manage Users ({users.length})</span>}
-                                </NavLink>
-
-                                <button className="flex items-center gap-3 p-3 rounded-lg bg-green-50 hover:bg-green-100 transition">
-                                    <span className="text-xl">📦</span>
-                                    {!collapsed && <span>Manage Products</span>}
-                                </button>
-
-                                <button className="flex items-center gap-3 p-3 rounded-lg bg-purple-50 hover:bg-purple-100 transition">
-                                    <span className="text-xl">📋</span>
-                                    {!collapsed && <span>View Orders</span>}
-                                </button>
-
-                                <button className="flex items-center gap-3 p-3 rounded-lg bg-orange-50 hover:bg-orange-100 transition">
                                     <span className="text-xl">📊</span>
                                     {!collapsed && <span>Analytics</span>}
-                                </button>
-                            </>
-                        ) : (
-                            <>
-                                <NavLink
-                                    to="userHome"
-                                    className={({ isActive }) =>
-                                        `flex items-center gap-3 p-3 rounded-lg hover:bg-blue-100 transition ${
-                                            isActive ? 'bg-blue-200 font-semibold' : 'bg-blue-50'
-                                        }`
-                                    }
-                                >
-                                    <span className="text-xl">📋</span>
-                                    {!collapsed && <span>My Orders</span>}
-                                </NavLink>
+                                </NavLink> */}
+                <NavLink
+                  to="admin/analytics" // remove the leading slash
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 p-3 rounded-lg bg-orange-50 hover:bg-orange-100 transition ${
+                      isActive ? "bg-orange-200 font-semibold" : ""
+                    }`
+                  }
+                >
+                  <span className="text-xl">📊</span>
+                  {!collapsed && <span>Analytics</span>}
+                </NavLink>
+              </>
+            ) : (
+              <>
+                <NavLink
+                  to="userHome"
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 p-3 rounded-lg hover:bg-blue-100 transition ${
+                      isActive ? "bg-blue-200 font-semibold" : "bg-blue-50"
+                    }`
+                  }
+                >
+                  <span className="text-xl">📋</span>
+                  {!collapsed && <span>My Orders</span>}
+                </NavLink>
 
-                                <NavLink
-                                    to="/wishlist"
-                                    className={({ isActive }) =>
-                                        `flex items-center gap-3 p-3 rounded-lg hover:bg-red-100 transition ${
-                                            isActive ? 'bg-red-200 font-semibold' : 'bg-red-50'
-                                        }`
-                                    }
-                                >
-                                    <span className="text-xl">❤️</span>
-                                    {!collapsed && <span>Wishlist ({wishlistItems.length})</span>}
-                                </NavLink>
+                <NavLink
+                  to="/wishlist"
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 p-3 rounded-lg hover:bg-red-100 transition ${
+                      isActive ? "bg-red-200 font-semibold" : "bg-red-50"
+                    }`
+                  }
+                >
+                  <span className="text-xl">❤️</span>
+                  {!collapsed && <span>Wishlist ({wishlistItems.length})</span>}
+                </NavLink>
 
-                                <NavLink
-                                    to="/cart"
-                                    className={({ isActive }) =>
-                                        `flex items-center gap-3 p-3 rounded-lg hover:bg-green-100 transition ${
-                                            isActive ? 'bg-green-200 font-semibold' : 'bg-green-50'
-                                        }`
-                                    }
-                                >
-                                    <span className="text-xl">🛒</span>
-                                    {!collapsed && <span>Shopping Cart ({cartItems.length})</span>}
-                                </NavLink>
+                <NavLink
+                  to="/cart"
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 p-3 rounded-lg hover:bg-green-100 transition ${
+                      isActive ? "bg-green-200 font-semibold" : "bg-green-50"
+                    }`
+                  }
+                >
+                  <span className="text-xl">🛒</span>
+                  {!collapsed && (
+                    <span>Shopping Cart ({cartItems.length})</span>
+                  )}
+                </NavLink>
 
-                                <NavLink
-                                    to="/profile"
-                                    className={({ isActive }) =>
-                                        `flex items-center gap-3 p-3 rounded-lg hover:bg-purple-100 transition ${
-                                            isActive ? 'bg-purple-200 font-semibold' : 'bg-purple-50'
-                                        }`
-                                    }
-                                >
-                                    <span className="text-xl">👤</span>
-                                    {!collapsed && <span>Profile</span>}
-                                </NavLink>
-                            </>
-                        )}
-                    </div>
-                </aside>
+                <NavLink
+                  to="/profile"
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 p-3 rounded-lg hover:bg-purple-100 transition ${
+                      isActive ? "bg-purple-200 font-semibold" : "bg-purple-50"
+                    }`
+                  }
+                >
+                  <span className="text-xl">👤</span>
+                  {!collapsed && <span>Profile</span>}
+                </NavLink>
+              </>
+            )}
+          </div>
+        </aside>
 
-                {/* Main Content */}
-                <main className="flex-1 p-8">
-                    <div className="bg-white rounded-lg shadow-lg p-6 min-h-[70vh]">
-                        <Outlet />
-                    </div>
-                </main>
-            </div>
-        </div>
-    );
+        {/* Main Content */}
+        <main className="flex-1 p-8">
+          <div className="bg-white rounded-lg shadow-lg p-6 min-h-[70vh]">
+            {/* Show Analytics directly for /dashboard/analytics route */}
+            {window.location.pathname.endsWith("/dashboard/analytics") ? (
+              <Analytics />
+            ) : (
+              <Outlet />
+            )}
+          </div>
+        </main>
+      </div>
+    </div>
+  );
 };
 
 export default Dashboard;

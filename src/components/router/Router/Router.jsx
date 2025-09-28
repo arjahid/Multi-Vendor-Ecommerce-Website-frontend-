@@ -18,6 +18,7 @@ import ManageUser from "../../page/Home/Navbar/Dashboard/Admin/ManageUser";
 import PrivateRouter from "./privateRouter";
 import AddProduct from "../../page/Home/AddProduct/AddProduct";
 import Test from "../../page/test/test";
+import Analytics from "../../page/Home/Navbar/Dashboard/Analytics";
 
 
 const router = createBrowserRouter([
@@ -113,6 +114,11 @@ const router = createBrowserRouter([
         path: "admin/users",
         element: <PrivateRouter><ManageUser></ManageUser></PrivateRouter>,
       },
+      {
+        path:"admin/analytics",
+        element:<PrivateRouter><Analytics></Analytics></PrivateRouter>
+      }
+    
     ],
   },
 ]);
