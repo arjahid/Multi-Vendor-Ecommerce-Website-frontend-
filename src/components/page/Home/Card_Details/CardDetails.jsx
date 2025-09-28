@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { use, useContext, useEffect, useRef } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import NavBar from '../Navbar/NavBar';
 import axios from 'axios';
@@ -6,6 +6,7 @@ import useCart from '../../../../Hooks/useCart';
 import useWishlist from '../../../../Hooks/useWishlist';
 import Swal from 'sweetalert2'
 import { AuthContext } from '../../../../providers/AuthProvider';
+import useUserBehaviour from '../../../../Hooks/UserBehaviour';
 
 const CardDetails = () => {
     const product = useLoaderData();
@@ -15,8 +16,17 @@ const CardDetails = () => {
     console.log("product id",product?._id);
     console.log("product full data", product);
     const {user}=useContext(AuthContext);
+    const{logBehaviour}=useUserBehaviour(user?.email);
+
 
     // console.log(productName);
+    const hashLoggedView=useRef(false);
+   useEffect(() => {
+  if (product?._id && user?.email && !hashLoggedView.current) {
+    logBehaviour(product._id, "view");
+    hashLoggedView.current = true;
+  }
+}, [product?._id, user?.email, logBehaviour]);
     
     if (!product) {
         return (
@@ -44,6 +54,9 @@ const CardDetails = () => {
                 }
             });
             return;
+        }
+        if(user.email && item._id){
+            logBehaviour(item._id,"add_to_cart");
         }
         const cartItem={
             email: user?.email, // Add user email if available
@@ -74,7 +87,7 @@ const CardDetails = () => {
             alert('Failed to add item to cart. Please try again.');
         });
     }
-    const handleWishList = () => {
+    const handleWishList = (item) => {
            if(!user){
             Swal.fire({
                 title: "Please login to add items to cart!",
@@ -88,6 +101,9 @@ const CardDetails = () => {
                 }
             });
             return;
+        }
+        if(user.email && item._id){
+            logBehaviour(item._id,"wishlist");
         }
         console.log('Wishlist feature is not implemented yet.');
         axios.post('http://localhost:3100/wishlist', {
@@ -182,7 +198,7 @@ const CardDetails = () => {
                         <button onClick={() => handleCart(product)} className="btn btn-primary flex-1 hover:btn-success transition-colors duration-200">
                             Add to Cart
                         </button>
-                        <button onClick={handleWishList} className="btn btn-outline hover:btn-primary transition-colors duration-200">
+                        <button onClick={() => handleWishList(product)} className="btn btn-outline hover:btn-primary transition-colors duration-200">
                             ♡ Wishlist
                         </button>
                     </div>

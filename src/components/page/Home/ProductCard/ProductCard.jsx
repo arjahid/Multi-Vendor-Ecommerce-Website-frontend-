@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { NavLink } from "react-router-dom";
 import AllProducts from "../../../../Hooks/All_Products";
+
+import { AuthContext } from "../../../../providers/AuthProvider";
+import useUserBehaviour from "../../../../Hooks/UserBehaviour";
 
 const ProductCard = () => {
   const { products, loading, error } = AllProducts();
@@ -8,6 +11,9 @@ const ProductCard = () => {
   const [genderTab, setGenderTab] = useState("all");
   const [filteredProducts, setFilteredProducts] = useState([]);
   const productsPerPage = 12;
+  // const userEmail = useContext(AuthContext)?.user?.email;
+  // const {logBehaviour}=useUserBehaviour(userEmail);
+  
 
   if (loading)
     return <div className="text-center py-20">Loading products...</div>;
@@ -107,6 +113,7 @@ const ProductCard = () => {
               <NavLink
                 key={productId}
                 to={`/product/${productId}`}
+                // onClick={()=>logBehaviour(productId,"viewed")}
                 className="block"
               >
                 <div className="card bg-white shadow-md hover:shadow-xl hover:-translate-y-1 sm:hover:-translate-y-2 transition-all duration-300 group cursor-pointer border border-gray-100 hover:border-green-300 relative overflow-hidden rounded-lg h-full">
