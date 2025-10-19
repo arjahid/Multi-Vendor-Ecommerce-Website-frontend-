@@ -59,7 +59,7 @@ const NavBar = () => {
             Home
           </NavLink>
         </li>
-        <li>
+        {/* <li>
           <NavLink 
             to="/login" 
             className={({ isActive }) => 
@@ -70,7 +70,7 @@ const NavBar = () => {
           >
             Login
           </NavLink>
-        </li>
+        </li> */}
         <li>
           <NavLink 
             to="/profile" 
