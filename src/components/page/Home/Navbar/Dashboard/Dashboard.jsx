@@ -214,10 +214,10 @@ const Dashboard = () => {
                   {!collapsed && <span>Manage Users ({users.length})</span>}
                 </NavLink>
 
-                <button className="flex items-center gap-3 p-3 rounded-lg bg-green-50 hover:bg-green-100 transition">
+                <NavLink to='admin/manage-product' className="flex items-center gap-3 p-3 rounded-lg bg-green-50 hover:bg-green-100 transition">
                   <span className="text-xl">📦</span>
                   {!collapsed && <span>Manage Products</span>}
-                </button>
+                </NavLink>
 
                 <button className="flex items-center gap-3 p-3 rounded-lg bg-purple-50 hover:bg-purple-100 transition">
                   <span className="text-xl">📋</span>
@@ -239,8 +239,8 @@ const Dashboard = () => {
               </>
             ) : (
               <>
-                <NavLink
-                  to="userHome"
+                <NavLink 
+                  to="user/orders"
                   className={({ isActive }) =>
                     `flex items-center gap-3 p-3 rounded-lg hover:bg-blue-100 transition ${
                       isActive ? "bg-blue-200 font-semibold" : "bg-blue-50"

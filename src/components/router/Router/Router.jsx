@@ -19,6 +19,8 @@ import PrivateRouter from "./privateRouter";
 import AddProduct from "../../page/Home/AddProduct/AddProduct";
 import Test from "../../page/test/test";
 import Analytics from "../../page/Home/Navbar/Dashboard/Analytics";
+import ManageProduct from "../../page/Home/Navbar/Dashboard/Admin/ManageProduct";
+import MyOrder from "../../page/Home/Navbar/Dashboard/NormalUser/MyOrder";
 
 
 const router = createBrowserRouter([
@@ -117,8 +119,15 @@ const router = createBrowserRouter([
       {
         path:"admin/analytics",
         element:<PrivateRouter><Analytics></Analytics></PrivateRouter>
-      }
-    
+      },
+      {
+        path:"admin/manage-product",
+        element:<PrivateRouter><ManageProduct></ManageProduct></PrivateRouter>
+      },
+      {
+        path: "user/orders",
+        element: <PrivateRouter><MyOrder></MyOrder></PrivateRouter>,
+      },
     ],
   },
 ]);

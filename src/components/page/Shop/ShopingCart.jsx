@@ -1,12 +1,14 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FaTrash, FaMinus, FaPlus, FaArrowLeft } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import NavBar from '../Home/Navbar/NavBar';
 import useCart from '../../../Hooks/useCart';
+import { AuthContext } from '../../../providers/AuthProvider';
 
 const ShopingCart = () => {
    const {cartItems, refetch,} = useCart();
+   const {user}=useContext(AuthContext);
    console.log('Cart Items:', cartItems);   
     
 
@@ -58,7 +60,35 @@ const ShopingCart = () => {
             return total + itemQuantity;
         }, 0);
     };
-    
+    const navigate=useNavigate();
+   
+    const handleOrder=(cart)=>{
+        // console.log("Order placed",cart);
+        if(!user?.email){
+            alert('Please log in to place an order.');
+            navigate('/login');
+            return;
+            
+        }
+        const orderData={
+            userEmail: user.email,
+            items: cart,
+            orderDate: new Date(),
+            status: 'pending'
+        }
+          console.log('Order placed',orderData);
+        axios.post('http://localhost:3100/orders', orderData)
+      
+        .then(response => {
+            console.log('Order response:', response.data);
+            alert('Order placed successfully!');
+            // Optionally, you can clear the cart here
+        })
+        .catch(error => {
+            console.error('Error placing order:', error);
+            alert('Failed to place order. Please try again.');
+        });
+    }
    
     
     return (
@@ -182,8 +212,8 @@ const ShopingCart = () => {
                                 </div>
 
                                 <div className="space-y-3">
-                                    <button className="w-full bg-gradient-to-r from-green-600 to-green-700 text-white py-4 px-6 rounded-lg hover:from-green-700 hover:to-green-800 transition-all duration-300 font-semibold text-lg shadow-lg hover:shadow-xl transform hover:scale-105">
-                                        Proceed to Checkout
+                                    <button onClick={()=>handleOrder(cartItems)} className="w-full bg-gradient-to-r from-green-600 to-green-700 text-white py-4 px-6 rounded-lg hover:from-green-700 hover:to-green-800 transition-all duration-300 font-semibold text-lg shadow-lg hover:shadow-xl transform hover:scale-105">
+                                        Proceed to Order
                                     </button>
                                     
                                     <Link 
