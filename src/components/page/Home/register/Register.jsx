@@ -72,7 +72,7 @@ const Register = () => {
                 console.log('User data saved successfully:', response.data);
                 alert("Registration successful!");
                 resetForm(form);
-                navigate('/login');
+                navigate('/');
             })
             .catch(error => {
                 console.error('Error saving user data:', error);

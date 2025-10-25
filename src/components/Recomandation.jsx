@@ -109,32 +109,78 @@ const RecommendationSection = () => {
         </div>
       )}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6  ">
+      {/* allow grid children to stretch so cards can fill full height */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6 items-stretch">
         {recommended.map(p => {
           const img = firstImageFor(p) || 'https://via.placeholder.com/300x200?text=No+Image';
           return (
-            <article key={p._id || p.productId} className= "flex flex-col h-full bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-xl hover:translate-y-1 sm:hover:-translate-y-2 transition-all duration-300 group cursor-pointer border border-gray-100 hover:border-green-300 relative  h-full ">
-              <Link to={`/product/${p._id || p.productId}`}>
-                <div className="w-full h-44 bg-gray-100">
+            <article
+              key={p._id || p.productId}
+              className="card bg-white shadow-md hover:shadow-xl hover:-translate-y-1 sm:hover:-translate-y-2 transition-all duration-300 group cursor-pointer border border-gray-100 hover:border-green-300 relative overflow-hidden rounded-lg h-full flex flex-col"
+            >
+              {/* Discount Badge */}
+              {p.discount ? (
+                <div className="absolute top-3 right-2 z-20">
+                  <div className="bg-red-500 text-white font-bold text-xs px-3 py-1 rounded-full shadow-lg">
+                    -{p.discount}% OFF
+                  </div>
+                </div>
+              ) : null}
+
+              <Link to={`/product/${p._id || p.productId}`} className="block flex-none">
+                <figure className="overflow-hidden bg-gray-100 relative">
                   <img
                     src={img}
-                    alt={p.productName || p.title }
-                    className="w-full h-44 object-cover"
+                    alt={p.productName || p.title || 'Product'}
+                    className="w-full h-28 sm:h-32 md:h-36 object-cover group-hover:scale-105 transition-transform duration-300"
                     onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = 'https://via.placeholder.com/300x200?text=No+Image'; }}
                   />
-                </div>
+                </figure>
               </Link>
-              <div className="p-4">
-                <h3 className="text-sm font-medium text-gray-900 line-clamp-2">{p.productName || p.title}</h3>
-                <p className="text-sm text-gray-500 mt-1 line-clamp-2">{p.description}</p>
-                <p className='font-bold pt-2'> Category: {p.category || 'General'}</p>
-                
-                <div className="mt-3 flex items-center justify-between">
-                  {/* <div className="text-sm text-gray-600">{p.vendor?.name || p.seller || ''}</div> */}
-                  <div className="font-semibold text-green-600">Price : {formatCurrency(p.price)}</div>
+
+              <div className="p-3 flex-1 flex flex-col justify-between">
+                <div>
+                  <p className="text-xs text-gray-500 uppercase tracking-wide mb-1 truncate font-bold">
+                    {p.category || p.productName || 'Product'}
+                  </p>
+                  <h3
+                    className="text-sm font-medium text-gray-800 group-hover:text-green-600 transition-colors duration-300 mb-1 leading-tight"
+                    style={{
+                      display: '-webkit-box',
+                      WebkitLineClamp: 2,
+                      WebkitBoxOrient: 'vertical',
+                      overflow: 'hidden',
+                      minHeight: '2.2rem',
+                    }}
+                  >
+                    {p.productName || p.title || 'Untitled Product'}
+                  </h3>
+
+                  <div className="flex items-center mb-1">
+                    <div className="text-yellow-400 text-xs">★★★★☆</div>
+                    <span className="text-xs text-gray-400 ml-1 hidden xs:inline">{p.rating?.rate ?? '4.0'}</span>
+                  </div>
+                </div>
+
+                <div className="mt-2">
+                  <p className="text-xs font-bold text-green-600 truncate">{formatCurrency(p.price) || 'Price not available'}</p>
                 </div>
               </div>
-                  <span className=" btn bg-green-400  xs:hidden w-full">+</span>
+
+              <div className="p-2 sm:p-3 flex-none">
+                <div className="flex gap-2 flex-col sm:flex-row">
+                  <Link
+                    to={`/product/${p._id || p.productId}`}
+                    className="inline-flex items-center justify-center flex-1 bg-gray-100 text-gray-800 py-2 rounded-md text-xs hover:bg-green-400"
+                  >
+                    View
+                  </Link>
+                  
+                </div>
+              </div>
+
+              {/* Hover indicator */}
+              <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-green-600 group-hover:w-full transition-all duration-300" />
             </article>
           );
         })}
