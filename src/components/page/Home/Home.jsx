@@ -6,6 +6,7 @@ import ProductCard from './ProductCard/ProductCard';
 import Category from './categeory/Category';
 import Footer from './Footer/Footer';
 import { Helmet } from 'react-helmet-async';
+import RecommendationSection from '../../Recomandation';
 
 
 const Home = () => {
@@ -18,8 +19,12 @@ const Home = () => {
             <NavBar></NavBar>
             <Carosel></Carosel>
             <Card></Card>
+         
             <Category></Category>
+               <RecommendationSection></RecommendationSection>
+            
             <ProductCard></ProductCard>
+            
             <Footer></Footer>
             
         </div>

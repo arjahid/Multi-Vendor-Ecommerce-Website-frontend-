@@ -166,13 +166,13 @@ const CategoryOutlet = () => {
                                         </div>
                                         
                                         <div className="flex space-x-2 pt-4">
-                                            <button className="flex-1 bg-green-600 text-white py-3 px-4 rounded-xl hover:bg-green-700 transition-colors font-semibold flex items-center justify-center space-x-2">
+                                            {/* <button  className="flex-1 bg-green-600 text-white py-3 px-4 rounded-xl hover:bg-green-700 transition-colors font-semibold flex items-center justify-center space-x-2">
                                                 <FaShoppingCart />
                                                 <span>Add to Cart</span>
-                                            </button>
+                                            </button> */}
                                             <Link 
                                                 to={`/product/${product._id}`}
-                                                className="bg-gray-100 text-gray-700 py-3 px-6 rounded-xl hover:bg-gray-200 transition-colors font-semibold"
+                                                className=" btn btn-primary rounded-full w-full"
                                             >
                                                 View
                                             </Link>

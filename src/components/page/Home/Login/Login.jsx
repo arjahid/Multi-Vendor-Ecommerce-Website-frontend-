@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import NavBar from '../Navbar/NavBar';
 import { AuthContext } from '../../../../providers/AuthProvider';
+import Swal from 'sweetalert2';
 
 const Login = () => {
   const navigate=useNavigate();
@@ -16,14 +17,23 @@ const Login = () => {
     console.log("Email:", email, "Password:", password);
     signIn(email, password)
       .then((result) => {
-        alert("Login successful!");
+        Swal.fire({
+            title: 'Login Successful!',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        });     
         navigate('/'); // Redirect to home page after successful login
 
         // Redirect or perform other actions after successful login
       })
       .catch((error) => {
         console.error("Login error:", error);
-        alert("Login failed. Please check your credentials.");
+        Swal.fire({
+          title: 'Login failed',
+          text: 'Please check your credentials.',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
       });
   }
     return (

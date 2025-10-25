@@ -219,10 +219,10 @@ const Dashboard = () => {
                   {!collapsed && <span>Manage Products</span>}
                 </NavLink>
 
-                <button className="flex items-center gap-3 p-3 rounded-lg bg-purple-50 hover:bg-purple-100 transition">
+                <NavLink to='admin/manage-orders' className="flex items-center gap-3 p-3 rounded-lg bg-purple-50 hover:bg-purple-100 transition">
                   <span className="text-xl">📋</span>
                   {!collapsed && <span>View Orders</span>}
-                </button>
+                </NavLink>
 
               
                 <NavLink

@@ -125,6 +125,10 @@ const router = createBrowserRouter([
         element:<PrivateRouter><ManageProduct></ManageProduct></PrivateRouter>
       },
       {
+        path: "admin/manage-orders",
+        element:<PrivateRouter><MyOrder></MyOrder></PrivateRouter>
+      },
+      {
         path: "user/orders",
         element: <PrivateRouter><MyOrder></MyOrder></PrivateRouter>,
       },
