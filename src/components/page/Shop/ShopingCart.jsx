@@ -1,12 +1,15 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FaTrash, FaMinus, FaPlus, FaArrowLeft } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import NavBar from '../Home/Navbar/NavBar';
 import useCart from '../../../Hooks/useCart';
+import { AuthContext } from '../../../providers/AuthProvider';
+import Swal from 'sweetalert2';
 
 const ShopingCart = () => {
    const {cartItems, refetch,} = useCart();
+   const {user}=useContext(AuthContext);
    console.log('Cart Items:', cartItems);   
     
 
@@ -45,13 +48,49 @@ const ShopingCart = () => {
 
 
     const getTotalPrice = () => {
-        return cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
+        return cartItems.reduce((total, item) => {
+            const itemPrice = parseFloat(item.price) || 0;
+            const itemQuantity = parseInt(item.quantity) || 0;
+            return total + (itemPrice * itemQuantity);
+        }, 0);
     };
 
     const getTotalItems = () => {
-        return cartItems.reduce((total, item) => total + item.quantity, 0);
+        return cartItems.reduce((total, item) => {
+            const itemQuantity = parseInt(item.quantity) || 0;
+            return total + itemQuantity;
+        }, 0);
     };
+    const navigate=useNavigate();
+   
+    const handleOrder=(cart)=>{
+        // console.log("Order placed",cart);
+        if(!user?.email){
+            alert('Please log in to place an order.');
+            navigate('/login');
+            return;
+            
+        }
+        const orderData={
+            userEmail: user.email,
+            items: cart,
+            orderDate: new Date(),
+            status: 'pending'
+        }
+          console.log('Order placed',orderData);
+        axios.post('http://localhost:3100/orders', orderData)
     
+      
+        .then(response => {
+            console.log('Order response:', response.data);
+            Swal.fire('Success', 'Order placed successfully!', 'success');
+            // Optionally, you can clear the cart here
+        })
+        .catch(error => {
+            console.error('Error placing order:', error);
+            Swal.fire('Error', 'Failed to place order. Please try again.', 'error');
+        });
+    }
    
     
     return (
@@ -59,12 +98,12 @@ const ShopingCart = () => {
             <NavBar />
             <div className="max-w-7xl mx-auto px-4 py-8">
                 {/* Header */}
-                <div className="flex items-center justify-between mb-8">
-                    <div className="flex items-center space-x-4">
+                <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-8 gap-4">
+                    <div className="flex items-center space-x-3">
                         <Link to="/" className="text-green-600 hover:text-green-700">
                             <FaArrowLeft className="text-lg" />
                         </Link>
-                        <h1 className="text-3xl font-bold text-gray-900">Shopping Cart</h1>
+                        <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Shopping Cart</h1>
                     </div>
                     <span className="text-gray-600 bg-gray-100 px-3 py-1 rounded-full">
                         {getTotalItems()} items
@@ -85,110 +124,115 @@ const ShopingCart = () => {
                         </Link>
                     </div>
                 ) : (
-                    <div className="grid lg:grid-cols-3 gap-8">
-                        {/* Cart Items */}
-                        <div className="lg:col-span-2 space-y-4">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        {/* Cart Items: span 2 cols on md+ */}
+                        <div className="md:col-span-2 space-y-4">
                             {cartItems.map((item) => (
-                                <div key={item._id} className="bg-white rounded-lg shadow-sm border p-6 hover:shadow-md transition-shadow">
-                                    <div className="flex items-center space-x-4">
+                                <div key={item._id} className="bg-white rounded-lg shadow-sm border p-4 md:p-6 hover:shadow-md transition-shadow">
+                                    <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
                                         <img 
-                                            src={item.image || 'https://via.placeholder.com/100'} 
+                                            src={item.image || 'https://via.placeholder.com/300x200?text=No+Image'} 
                                             alt={item.productName}
-                                            className="w-24 h-24 object-cover rounded-lg border"
+                                            className="w-full md:w-24 h-40 md:h-24 object-cover rounded-lg border flex-none"
                                         />
                                         
-                                        <div className="flex-1">
+                                        <div className="flex-1 w-full">
                                             <h3 className="text-lg font-semibold text-gray-900 mb-1">
                                                 {item.productName}
                                             </h3>
                                             <p className="text-sm text-gray-500 mb-2">{item.category}</p>
-                                            <p className="text-xl font-bold text-green-600">
-                                                BDT {item.price?.toLocaleString()}
+                                            <p className="text-xl font-bold text-green-600 mb-3">
+                                                BDT {parseFloat(item.price || 0).toLocaleString()}
                                             </p>
-                                        </div>
-                                        
-                                        {/* Quantity Controls */}
-                                        <div className="flex items-center space-x-3">
-                                            <button 
-                                                onClick={() => updateQuantity(item._id, item.quantity - 1)}
-                                                className="w-10 h-10 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-full transition-colors"
-                                            >
-                                                <FaMinus className="text-xs" />
-                                            </button>
-                                            <span className="w-12 text-center font-semibold text-lg">
-                                                {item.quantity}
-                                            </span>
-                                            <button 
-                                                onClick={() => updateQuantity(item._id, item.quantity + 1)}
-                                                className="w-10 h-10 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-full transition-colors"
-                                            >
-                                                <FaPlus className="text-xs" />
-                                            </button>
-                                        </div>
 
-                                        {/* Item Total */}
-                                        <div className="text-right min-w-24">
-                                            <p className="text-xl font-bold text-gray-900">
-                                                BDT {(item.price * item.quantity).toLocaleString()}
-                                            </p>
-                                        </div>
+                                            {/* Controls: stack on small, inline on md */}
+                                            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                                                <div className="flex items-center space-x-2">
+                                                    <button 
+                                                        onClick={() => updateQuantity(item._id, item.quantity - 1)}
+                                                        className="w-9 h-9 md:w-10 md:h-10 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-full transition-colors"
+                                                    >
+                                                        <FaMinus className="text-xs" />
+                                                    </button>
+                                                    <span className="w-12 text-center font-semibold text-lg">
+                                                        {item.quantity}
+                                                    </span>
+                                                    <button 
+                                                        onClick={() => updateQuantity(item._id, item.quantity + 1)}
+                                                        className="w-9 h-9 md:w-10 md:h-10 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-full transition-colors"
+                                                    >
+                                                        <FaPlus className="text-xs" />
+                                                    </button>
+                                                </div>
 
-                                        {/* Remove Button */}
-                                        <button 
-                                            onClick={() => removeItem(item._id)}
-                                            className="text-red-500 hover:text-red-700 p-2 hover:bg-red-50 rounded-full transition-colors"
-                                        >
-                                            <FaTrash />
-                                        </button>
+                                                <div className="flex items-center justify-between md:justify-end gap-4 w-full md:w-auto">
+                                                    <div className="text-right">
+                                                        <p className="text-xl font-bold text-gray-900">
+                                                            ৳{((parseFloat(item.price) || 0) * (parseInt(item.quantity) || 0)).toLocaleString()}
+                                                        </p>
+                                                    </div>
+                                                    <button 
+                                                        onClick={() => removeItem(item._id)}
+                                                        className="text-red-500 hover:text-red-700 p-2 hover:bg-red-50 rounded-full transition-colors"
+                                                    >
+                                                        <FaTrash />
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             ))}
                         </div>
 
-                        {/* Order Summary */}
-                        <div className="lg:col-span-1">
-                            <div className="bg-white rounded-lg shadow-sm border p-6 sticky top-8">
-                                <h2 className="text-2xl font-bold mb-6">Order Summary</h2>
+                        {/* Order Summary: sticky on md+ only */}
+                        <div className="md:col-span-1">
+                            <div className="bg-white rounded-lg shadow-sm border p-6 md:sticky md:top-8">
+                                <h2 className="text-2xl font-bold mb-6 text-gray-800">Order Summary</h2>
                                 
                                 <div className="space-y-4 mb-6">
-                                    <div className="flex justify-between text-lg">
+                                    <div className="flex justify-between py-2">
                                         <span className="text-gray-600">Subtotal ({getTotalItems()} items)</span>
-                                        <span className="font-semibold">BDT {getTotalPrice().toLocaleString()}</span>
+                                        <span className="font-semibold text-gray-800">৳{getTotalPrice().toLocaleString()}</span>
                                     </div>
-                                    <div className="flex justify-between">
-                                        <span className="text-gray-600">Shipping</span>
+                                    
+                                    <div className="flex justify-between py-2">
+                                        <span className="text-gray-600">Delivery Fee</span>
                                         <span className="font-semibold text-green-600">Free</span>
                                     </div>
-                                    <div className="flex justify-between">
-                                        <span className="text-gray-600">Tax (5%)</span>
-                                        <span className="font-semibold">BDT {Math.round(getTotalPrice() * 0.05).toLocaleString()}</span>
+                                    
+                                    <div className="flex justify-between py-2">
+                                        <span className="text-gray-600">Discount</span>
+                                        <span className="font-semibold text-red-600">-৳0</span>
                                     </div>
-                                    <hr className="border-gray-200" />
-                                    <div className="flex justify-between text-xl font-bold">
-                                        <span>Total</span>
-                                        <span className="text-green-600">
-                                            BDT {(getTotalPrice() + Math.round(getTotalPrice() * 0.05)).toLocaleString()}
-                                        </span>
+                                    
+                                    <hr className="border-gray-300" />
+                                    
+                                    <div className="flex justify-between py-3 text-xl font-bold">
+                                        <span className="text-gray-800">Total</span>
+                                        <span className="text-green-600">৳{getTotalPrice().toLocaleString()}</span>
                                     </div>
                                 </div>
 
-                                <button className="w-full bg-green-600 text-white py-4 px-6 rounded-lg hover:bg-green-700 transition-colors mb-4 font-semibold text-lg">
-                                    Proceed to Checkout
-                                </button>
-                                
-                                <Link 
-                                    to="/" 
-                                    className="w-full block text-center bg-gray-100 text-gray-700 py-3 px-6 rounded-lg hover:bg-gray-200 transition-colors"
-                                >
-                                    Continue Shopping
-                                </Link>
+                                <div className="space-y-3">
+                                    <button onClick={()=>handleOrder(cartItems)} className="w-full bg-gradient-to-r from-green-600 to-green-700 text-white py-3 px-6 rounded-lg hover:from-green-700 hover:to-green-800 transition-all duration-300 font-semibold text-lg shadow-lg">
+                                        Proceed to Order
+                                    </button>
+                                    
+                                    <Link 
+                                        to="/" 
+                                        className="w-full block text-center bg-gray-100 text-gray-700 py-3 px-6 rounded-lg hover:bg-gray-200 transition-colors duration-300 font-medium"
+                                    >
+                                        Continue Shopping
+                                    </Link>
+                                </div>
                             </div>
                         </div>
                     </div>
-                )}
-            </div>
-        </div>
-    );
+                 )}
+             </div>
+         </div>
+     );
 };
 
 export default ShopingCart;

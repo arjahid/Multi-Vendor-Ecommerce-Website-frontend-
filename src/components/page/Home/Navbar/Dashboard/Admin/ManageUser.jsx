@@ -1,6 +1,7 @@
 import React from 'react';
 import useAllUsers from '../../../../../../Hooks/allUser';
 import useAxiosPublic from '../../../../../../Hooks/useAxiousPublic';
+import Swal from 'sweetalert2';
 
 const ManageUser = () => {
     const { users, loading, error } = useAllUsers();
@@ -8,30 +9,54 @@ const ManageUser = () => {
 
     // Delete user function
     const handleDelete = async (userId) => {
-        if (!window.confirm("Are you sure you want to delete this user?")) return;
+        const result = await Swal.fire({
+            title: 'Are you sure?',
+            text: "This action will permanently delete the user.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel'
+        });
+
+        if (!result.isConfirmed) return;
 
         try {
             await axiosPublic.delete(`/users/${userId}`);
-            alert("User deleted successfully!");
+            await Swal.fire('Deleted!', 'User deleted successfully.', 'success');
             window.location.reload(); // refresh the page
         } catch (error) {
-            console.error("Delete error:", error);
-            alert("Failed to delete user.");
+            console.error('Delete error:', error);
+            await Swal.fire('Error', 'Failed to delete user.', 'error');
         }
     };
 
     // Toggle Admin Role
     const handleToggleAdmin = async (user) => {
+        const newRole = user.role === 'admin' ? 'customer' : 'admin';
+        const actionText = newRole === 'admin' ? 'promote to Admin' : 'remove Admin role';
+
+        const result = await Swal.fire({
+            title: 'Confirm role change',
+            text: `Are you sure you want to ${actionText} for ${user.email}?`,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#aaa',
+            confirmButtonText: 'Yes, proceed',
+            cancelButtonText: 'Cancel'
+        });
+
+        if (!result.isConfirmed) return;
+
         try {
-            const newRole = user.role === "admin" ? "customer" : "admin";
-            await axiosPublic.patch(`/users/admin/${user.email}`, {
-                role: newRole,
-            });
-            alert("User role updated!");
+            await axiosPublic.patch(`/users/admin/${user.email}`, { role: newRole });
+            await Swal.fire('Updated!', 'User role updated.', 'success');
             window.location.reload(); // refresh the page
         } catch (error) {
-            console.error("Role update error:", error);
-            alert("Failed to update role.");
+            console.error('Role update error:', error);
+            await Swal.fire('Error', 'Failed to update role.', 'error');
         }
     };
 

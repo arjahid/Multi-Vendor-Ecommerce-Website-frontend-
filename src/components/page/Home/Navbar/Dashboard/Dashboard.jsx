@@ -15,7 +15,7 @@
 //     const {wishlistItems}=useWishlist();
 //     const{users,loading}=useAllUsers()
 //     const {products}=AllProducts();
-    
+
 //     if (isAdminLoading) {
 //         return (
 //             <div>
@@ -29,7 +29,7 @@
 //             </div>
 //         );
 //     }
-    
+
 //     return (
 //         <div>
 //             <NavBar />
@@ -38,7 +38,7 @@
 //                     <h1 className="text-4xl font-bold mb-8 text-center">
 //                         {isAdmin ? 'Admin Dashboard' : 'User Dashboard'}
 //                     </h1>
-                     
+
 //                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
 //                         <div className="bg-white p-6 rounded-lg shadow-lg">
 //                             <h2 className="text-xl font-semibold mb-4">Welcome Back!</h2>
@@ -50,7 +50,7 @@
 //                                 </span>
 //                             </div>
 //                         </div>
-                        
+
 //                         <div className="bg-white p-6 rounded-lg shadow-lg">
 //                             <h2 className="text-xl font-semibold mb-4">Quick Stats</h2>
 //                             {isAdmin ? (
@@ -68,7 +68,7 @@
 //                             )}
 //                         </div>
 //                     </div>
-                    
+
 //                     {/* Admin Options */}
 //                     {isAdmin && (
 //                         <div className="bg-white p-6 rounded-lg shadow-lg mb-8">
@@ -97,7 +97,7 @@
 //                             </div>
 //                         </div>
 //                     )}
-                    
+
 //                     {/* User Options */}
 //                     {!isAdmin && (
 //                         <div className="bg-white p-6 rounded-lg shadow-lg">
@@ -136,160 +136,303 @@
 // };
 
 // export default Dashboard;
-import React, { useContext, useState } from 'react';
-import { AuthContext } from '../../../../../providers/AuthProvider';
-import useAdmin from '../../../../../Hooks/useAdmin';
-import NavBar from '../../Navbar/NavBar';
-import { NavLink, Outlet } from 'react-router-dom';
-import useCart from '../../../../../Hooks/useCart';
-import useWishlist from '../../../../../Hooks/useWishlist';
-import useAllUsers from '../../../../../Hooks/allUser';
-import AllProducts from '../../../../../Hooks/All_Products';
+import React, { useContext, useState } from "react";
+import { AuthContext } from "../../../../../providers/AuthProvider";
+import useAdmin from "../../../../../Hooks/useAdmin";
+import NavBar from "../../Navbar/NavBar";
+import { NavLink, Outlet } from "react-router-dom";
+import useCart from "../../../../../Hooks/useCart";
+import useWishlist from "../../../../../Hooks/useWishlist";
+import useAllUsers from "../../../../../Hooks/allUser";
+import AllProducts from "../../../../../Hooks/All_Products";
+import Analytics from "./Analytics";
 
 const Dashboard = () => {
-    const { user } = useContext(AuthContext);
-    const { isAdmin, isAdminLoading } = useAdmin();
-    const { cartItems } = useCart();
-    const { wishlistItems } = useWishlist();
-    const { users } = useAllUsers();
-    const { products } = AllProducts();
-    const [collapsed, setCollapsed] = useState(false); // sidebar toggle
+  const { user } = useContext(AuthContext);
+  const { isAdmin, isAdminLoading } = useAdmin();
+  const { cartItems } = useCart();
+  const { wishlistItems } = useWishlist();
+  const { users } = useAllUsers();
+  const { products } = AllProducts();
+  const [collapsed, setCollapsed] = useState(false); // sidebar toggle (desktop)
+  const [mobileOpen, setMobileOpen] = useState(false); // mobile sidebar
 
-    if (isAdminLoading) {
-        return (
-            <div>
-                <NavBar />
-                <div className="flex items-center justify-center min-h-screen">
-                    <div className="text-center">
-                        <div className="loading loading-spinner loading-lg"></div>
-                        <p className="mt-4">Loading admin status...</p>
-                    </div>
-                </div>
-            </div>
-        );
-    }
-
+  if (isAdminLoading) {
     return (
-        <div className="flex flex-col min-h-screen">
-            <NavBar />
-
-            <div className="flex flex-1 bg-gray-50">
-                {/* Sidebar */}
-                <aside
-                    className={`bg-white shadow-lg p-6 flex flex-col transition-all duration-300 ${
-                        collapsed ? 'w-20' : 'w-64'
-                    }`}
-                >
-                    {/* Collapse Button */}
-                    <button
-                        onClick={() => setCollapsed(!collapsed)}
-                        className="mb-6 p-2 bg-gray-200 rounded-full hover:bg-gray-300 transition self-end"
-                    >
-                        {collapsed ? '➡️' : '⬅️'}
-                    </button>
-
-                    {/* Role Info */}
-                    {!collapsed && (
-                        <div className="bg-gray-100 p-4 rounded-lg text-center mb-6">
-                            <p className="font-semibold">{user?.email}</p>
-                            <p className="text-sm">{isAdmin ? 'Administrator' : 'Customer'}</p>
-                        </div>
-                    )}
-
-                    {/* Nav Links */}
-                    <div className="flex flex-col space-y-2">
-                        {isAdmin ? (
-                            <>
-                                <NavLink
-                                    to="admin/users"
-                                    className={({ isActive }) =>
-                                        `flex items-center gap-3 p-3 rounded-lg hover:bg-blue-100 transition ${
-                                            isActive ? 'bg-blue-200 font-semibold' : 'bg-blue-50'
-                                        }`
-                                    }
-                                >
-                                    <span className="text-xl">👥</span>
-                                    {!collapsed && <span>Manage Users ({users.length})</span>}
-                                </NavLink>
-
-                                <button className="flex items-center gap-3 p-3 rounded-lg bg-green-50 hover:bg-green-100 transition">
-                                    <span className="text-xl">📦</span>
-                                    {!collapsed && <span>Manage Products</span>}
-                                </button>
-
-                                <button className="flex items-center gap-3 p-3 rounded-lg bg-purple-50 hover:bg-purple-100 transition">
-                                    <span className="text-xl">📋</span>
-                                    {!collapsed && <span>View Orders</span>}
-                                </button>
-
-                                <button className="flex items-center gap-3 p-3 rounded-lg bg-orange-50 hover:bg-orange-100 transition">
-                                    <span className="text-xl">📊</span>
-                                    {!collapsed && <span>Analytics</span>}
-                                </button>
-                            </>
-                        ) : (
-                            <>
-                                <NavLink
-                                    to="userHome"
-                                    className={({ isActive }) =>
-                                        `flex items-center gap-3 p-3 rounded-lg hover:bg-blue-100 transition ${
-                                            isActive ? 'bg-blue-200 font-semibold' : 'bg-blue-50'
-                                        }`
-                                    }
-                                >
-                                    <span className="text-xl">📋</span>
-                                    {!collapsed && <span>My Orders</span>}
-                                </NavLink>
-
-                                <NavLink
-                                    to="/wishlist"
-                                    className={({ isActive }) =>
-                                        `flex items-center gap-3 p-3 rounded-lg hover:bg-red-100 transition ${
-                                            isActive ? 'bg-red-200 font-semibold' : 'bg-red-50'
-                                        }`
-                                    }
-                                >
-                                    <span className="text-xl">❤️</span>
-                                    {!collapsed && <span>Wishlist ({wishlistItems.length})</span>}
-                                </NavLink>
-
-                                <NavLink
-                                    to="/cart"
-                                    className={({ isActive }) =>
-                                        `flex items-center gap-3 p-3 rounded-lg hover:bg-green-100 transition ${
-                                            isActive ? 'bg-green-200 font-semibold' : 'bg-green-50'
-                                        }`
-                                    }
-                                >
-                                    <span className="text-xl">🛒</span>
-                                    {!collapsed && <span>Shopping Cart ({cartItems.length})</span>}
-                                </NavLink>
-
-                                <NavLink
-                                    to="/profile"
-                                    className={({ isActive }) =>
-                                        `flex items-center gap-3 p-3 rounded-lg hover:bg-purple-100 transition ${
-                                            isActive ? 'bg-purple-200 font-semibold' : 'bg-purple-50'
-                                        }`
-                                    }
-                                >
-                                    <span className="text-xl">👤</span>
-                                    {!collapsed && <span>Profile</span>}
-                                </NavLink>
-                            </>
-                        )}
-                    </div>
-                </aside>
-
-                {/* Main Content */}
-                <main className="flex-1 p-8">
-                    <div className="bg-white rounded-lg shadow-lg p-6 min-h-[70vh]">
-                        <Outlet />
-                    </div>
-                </main>
-            </div>
+      <div>
+        <NavBar />
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="text-center">
+            <div className="loading loading-spinner loading-lg"></div>
+            <p className="mt-4">Loading admin status...</p>
+          </div>
         </div>
+      </div>
     );
+  }
+
+  return (
+    <div className="flex flex-col min-h-screen">
+      <NavBar />
+
+      {/* Mobile sidebar toggle button (visible on small screens) */}
+      <div className="md:hidden fixed top-20 left-4 z-50">
+        <button
+          onClick={() => setMobileOpen(true)}
+          aria-label="Open menu"
+          className="p-2 rounded-md bg-white shadow text-gray-700"
+        >
+          ☰
+        </button>
+      </div>
+
+      <div className="flex flex-1 bg-gray-50">
+        {/* Desktop Sidebar (hidden on small screens) */}
+        <aside
+          className={`hidden md:flex bg-white shadow-lg p-4 md:p-6 flex-col transition-all duration-300 ${
+            collapsed ? "w-20" : "w-64"
+          }`}
+          aria-hidden={mobileOpen}
+        >
+          {/* Collapse Button */}
+          <button
+            onClick={() => setCollapsed(!collapsed)}
+            aria-expanded={!collapsed}
+            className="mb-4 p-2 bg-gray-200 rounded-full hover:bg-gray-300 transition self-end"
+            title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+          >
+            {collapsed ? "➡️" : "⬅️"}
+          </button>
+
+          {/* Role Info */}
+          {!collapsed && (
+            <div className="bg-gray-100 p-3 rounded-lg text-center mb-6">
+              <p className="font-semibold truncate">{user?.email}</p>
+              <p className="text-sm">{isAdmin ? "Administrator" : "Customer"}</p>
+            </div>
+          )}
+
+          {/* Nav Links */}
+          <nav className="flex flex-col gap-2">
+            {isAdmin ? (
+              <>
+                <NavLink
+                  to="admin/users"
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 p-2 rounded-lg hover:bg-blue-100 transition ${
+                      isActive ? "bg-blue-200 font-semibold" : "bg-blue-50"
+                    }`
+                  }
+                >
+                  <span className="text-xl">👥</span>
+                  {!collapsed && <span>Manage Users ({users.length})</span>}
+                </NavLink>
+
+                <NavLink
+                  to="admin/manage-product"
+                  className="flex items-center gap-3 p-2 rounded-lg bg-green-50 hover:bg-green-100 transition"
+                >
+                  <span className="text-xl">📦</span>
+                  {!collapsed && <span>Manage Products</span>}
+                </NavLink>
+
+                <NavLink
+                  to="admin/manage-orders"
+                  className="flex items-center gap-3 p-2 rounded-lg bg-purple-50 hover:bg-purple-100 transition"
+                >
+                  <span className="text-xl">📋</span>
+                  {!collapsed && <span>View Orders</span>}
+                </NavLink>
+
+                <NavLink
+                  to="admin/analytics"
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 p-2 rounded-lg bg-orange-50 hover:bg-orange-100 transition ${
+                      isActive ? "bg-orange-200 font-semibold" : ""
+                    }`
+                  }
+                >
+                  <span className="text-xl">📊</span>
+                  {!collapsed && <span>Analytics</span>}
+                </NavLink>
+              </>
+            ) : (
+              <>
+                <NavLink
+                  to="user/orders"
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 p-2 rounded-lg hover:bg-blue-100 transition ${
+                      isActive ? "bg-blue-200 font-semibold" : "bg-blue-50"
+                    }`
+                  }
+                >
+                  <span className="text-xl">📋</span>
+                  {!collapsed && <span>My Orders</span>}
+                </NavLink>
+
+                <NavLink
+                  to="/wishlist"
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 p-2 rounded-lg hover:bg-red-100 transition ${
+                      isActive ? "bg-red-200 font-semibold" : "bg-red-50"
+                    }`
+                  }
+                >
+                  <span className="text-xl">❤️</span>
+                  {!collapsed && <span>Wishlist ({wishlistItems.length})</span>}
+                </NavLink>
+
+                <NavLink
+                  to="/cart"
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 p-2 rounded-lg hover:bg-green-100 transition ${
+                      isActive ? "bg-green-200 font-semibold" : "bg-green-50"
+                    }`
+                  }
+                >
+                  <span className="text-xl">🛒</span>
+                  {!collapsed && <span>Shopping Cart ({cartItems.length})</span>}
+                </NavLink>
+
+                <NavLink
+                  to="/profile"
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 p-2 rounded-lg hover:bg-purple-100 transition ${
+                      isActive ? "bg-purple-200 font-semibold" : "bg-purple-50"
+                    }`
+                  }
+                >
+                  <span className="text-xl">👤</span>
+                  {!collapsed && <span>Profile</span>}
+                </NavLink>
+              </>
+            )}
+          </nav>
+        </aside>
+
+        {/* Mobile Sidebar (slide-over) */}
+        {mobileOpen && (
+          <div className="fixed inset-0 z-50 flex">
+            <div
+              className="fixed inset-0 bg-black/40"
+              onClick={() => setMobileOpen(false)}
+              aria-hidden="true"
+            />
+            <div className="relative bg-white w-72 p-6 overflow-auto">
+              <div className="flex items-center justify-between mb-4">
+                <div className="font-semibold truncate">{user?.email}</div>
+                <button
+                  onClick={() => setMobileOpen(false)}
+                  className="p-2 rounded-md bg-gray-100"
+                  aria-label="Close menu"
+                >
+                  ✕
+                </button>
+              </div>
+              <nav className="flex flex-col gap-2">
+                {isAdmin ? (
+                  <>
+                    <NavLink
+                      to="admin/users"
+                      onClick={() => setMobileOpen(false)}
+                      className="p-3 rounded-lg hover:bg-gray-100"
+                    >
+                      👥 Manage Users
+                    </NavLink>
+                    <NavLink
+                      to="admin/manage-product"
+                      onClick={() => setMobileOpen(false)}
+                      className="p-3 rounded-lg hover:bg-gray-100"
+                    >
+                      📦 Manage Products
+                    </NavLink>
+                    <NavLink
+                      to="admin/manage-orders"
+                      onClick={() => setMobileOpen(false)}
+                      className="p-3 rounded-lg hover:bg-gray-100"
+                    >
+                      📋 View Orders
+                    </NavLink>
+                    <NavLink
+                      to="admin/analytics"
+                      onClick={() => setMobileOpen(false)}
+                      className="p-3 rounded-lg hover:bg-gray-100"
+                    >
+                      📊 Analytics
+                    </NavLink>
+                  </>
+                ) : (
+                  <>
+                    <NavLink
+                      to="user/orders"
+                      onClick={() => setMobileOpen(false)}
+                      className="p-3 rounded-lg hover:bg-gray-100"
+                    >
+                      📋 My Orders
+                    </NavLink>
+                    <NavLink
+                      to="/wishlist"
+                      onClick={() => setMobileOpen(false)}
+                      className="p-3 rounded-lg hover:bg-gray-100"
+                    >
+                      ❤️ Wishlist
+                    </NavLink>
+                    <NavLink
+                      to="/cart"
+                      onClick={() => setMobileOpen(false)}
+                      className="p-3 rounded-lg hover:bg-gray-100"
+                    >
+                      🛒 Cart
+                    </NavLink>
+                    <NavLink
+                      to="/profile"
+                      onClick={() => setMobileOpen(false)}
+                      className="p-3 rounded-lg hover:bg-gray-100"
+                    >
+                      👤 Profile
+                    </NavLink>
+                  </>
+                )}
+              </nav>
+            </div>
+          </div>
+        )}
+
+        {/* Main Content */}
+        <main className="flex-1 p-4 md:p-8">
+          <div className="bg-white rounded-lg shadow-lg p-6 min-h-[60vh]">
+            {/* Intro / quick stats (responsive grid) */}
+            <div className="mb-6">
+              <h1 className="text-2xl md:text-3xl font-bold mb-2">Welcome to your Dashboard!</h1>
+              <p className="text-sm text-gray-600">Overview and quick access to your account.</p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+              <div className="p-4 bg-gray-50 rounded-lg">
+                <div className="text-sm text-gray-500">Total Users</div>
+                <div className="text-2xl font-bold">{users?.length ?? 0}</div>
+              </div>
+              <div className="p-4 bg-gray-50 rounded-lg">
+                <div className="text-sm text-gray-500">Total Products</div>
+                <div className="text-2xl font-bold">{products?.length ?? 0}</div>
+              </div>
+              <div className="p-4 bg-gray-50 rounded-lg">
+                <div className="text-sm text-gray-500">Cart Items</div>
+                <div className="text-2xl font-bold">{cartItems?.length ?? 0}</div>
+              </div>
+            </div>
+
+            {/* Show Analytics directly for /dashboard/analytics route or nested content */}
+            {window.location.pathname.endsWith("/dashboard/analytics") ? (
+              <Analytics />
+            ) : (
+              <Outlet />
+            )}
+          </div>
+        </main>
+      </div>
+    </div>
+  );
 };
 
 export default Dashboard;

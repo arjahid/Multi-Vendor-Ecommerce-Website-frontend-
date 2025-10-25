@@ -10,6 +10,7 @@ const Register = () => {
     const axiosPublic = useAxiosPublic();
     const navigate = useNavigate();
     const authContext = useContext(AuthContext);
+    const [role,setRole]=useState('customer');
     
     // Check if context is available
     if (!authContext) {
@@ -57,7 +58,8 @@ const Register = () => {
                 name: name,
                 email: email,
                 gender: gender,
-                role: 'customer',
+                role: role, // Use the selected role from state
+              
                 uid: loggedUser.uid,
                 createdAt: new Date().toISOString()
             };
@@ -70,7 +72,7 @@ const Register = () => {
                 console.log('User data saved successfully:', response.data);
                 alert("Registration successful!");
                 resetForm(form);
-                navigate('/login');
+                navigate('/');
             })
             .catch(error => {
                 console.error('Error saving user data:', error);
@@ -132,6 +134,17 @@ const Register = () => {
                                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition duration-200"
                                         placeholder="Enter your email"
                                     />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">Register as</label>
+                                    <select
+                                        value={role}
+                                        onChange={(e) => setRole(e.target.value)}
+                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition duration-200"
+                                    >
+                                        <option value="customer">Customer</option>
+                                        <option value="vendor">Vendor</option>
+                                    </select>
                                 </div>
                                 
                                 <div>

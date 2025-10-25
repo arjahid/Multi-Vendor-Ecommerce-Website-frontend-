@@ -14,9 +14,14 @@ import Register from "../../page/Home/register/Register";
 import Setting from "../../page/Setting/Setting";
 import Dashboard from "../../page/Home/Navbar/Dashboard/Dashboard";
 import UserHome from "../../page/Home/Navbar/Dashboard/UserHome";
-import ManageUser from "../../page/Home/Navbar/Dashboard/Admin/ManageUser";
+import ManageUser from "../../page/Home/Navbar/Dashboard/Admin/ManageUser";  
 import PrivateRouter from "./privateRouter";
 import AddProduct from "../../page/Home/AddProduct/AddProduct";
+import Test from "../../page/test/test";
+import Analytics from "../../page/Home/Navbar/Dashboard/Analytics";
+import ManageProduct from "../../page/Home/Navbar/Dashboard/Admin/ManageProduct";
+import MyOrder from "../../page/Home/Navbar/Dashboard/NormalUser/MyOrder";
+
 
 const router = createBrowserRouter([
   {
@@ -82,6 +87,10 @@ const router = createBrowserRouter([
         element: <PrivateRouter><ShopingCart></ShopingCart></PrivateRouter>,
       },
       {
+        path: "/test",
+        element: <PrivateRouter><Test></Test></PrivateRouter>,
+      },
+      {
         path: "/wishlist",
         element: <PrivateRouter><Wishlist></Wishlist></PrivateRouter>,
       },
@@ -106,6 +115,22 @@ const router = createBrowserRouter([
       {
         path: "admin/users",
         element: <PrivateRouter><ManageUser></ManageUser></PrivateRouter>,
+      },
+      {
+        path:"admin/analytics",
+        element:<PrivateRouter><Analytics></Analytics></PrivateRouter>
+      },
+      {
+        path:"admin/manage-product",
+        element:<PrivateRouter><ManageProduct></ManageProduct></PrivateRouter>
+      },
+      {
+        path: "admin/manage-orders",
+        element:<PrivateRouter><MyOrder></MyOrder></PrivateRouter>
+      },
+      {
+        path: "user/orders",
+        element: <PrivateRouter><MyOrder></MyOrder></PrivateRouter>,
       },
     ],
   },

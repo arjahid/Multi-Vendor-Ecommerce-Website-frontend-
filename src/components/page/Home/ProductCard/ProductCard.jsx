@@ -1,11 +1,19 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { NavLink } from "react-router-dom";
 import AllProducts from "../../../../Hooks/All_Products";
+
+import { AuthContext } from "../../../../providers/AuthProvider";
+import useUserBehaviour from "../../../../Hooks/UserBehaviour";
 
 const ProductCard = () => {
   const { products, loading, error } = AllProducts();
   const [currentPage, setCurrentPage] = useState(1);
+  const [genderTab, setGenderTab] = useState("all");
+  const [filteredProducts, setFilteredProducts] = useState([]);
   const productsPerPage = 12;
+  // const userEmail = useContext(AuthContext)?.user?.email;
+  // const {logBehaviour}=useUserBehaviour(userEmail);
+  
 
   if (loading)
     return <div className="text-center py-20">Loading products...</div>;
@@ -24,6 +32,28 @@ const ProductCard = () => {
   };
   console.log(products);
 
+  const handleGenderTab = async (tab) => {
+    setGenderTab(tab);
+    if (tab === "all") {
+      setCurrentPage(1);
+     
+      
+      return;
+    }
+    try {
+      const res = await fetch(`http://localhost:3100/products/gender/${tab}`);
+      const data = await res.json();
+      setCurrentPage(1);
+    
+      setFilteredProducts(data);
+    } catch (error) {
+      console.error("Error fetching gender products:", error);
+    }
+  };
+
+  
+  const displayProducts = genderTab === "all" ? currentProducts : filteredProducts;
+
   return (
     <div className="min-h-screen bg-gray-50 py-8 sm:py-12">
       <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
@@ -37,8 +67,42 @@ const ProductCard = () => {
           <div className="w-16 sm:w-24 h-1 bg-green-600 mx-auto rounded"></div>
         </div>
 
+        {/* Gender Tab Buttons */}
+        <div className="flex justify-center mb-6 gap-2">
+          <button
+            className={`px-4 py-2 rounded-full font-semibold border transition-colors duration-200 ${
+              genderTab === "all"
+                ? "bg-green-600 text-white border-green-600"
+                : "bg-white text-gray-700 border-gray-300 hover:bg-green-50"
+            }`}
+            onClick={() => handleGenderTab("all")}
+          >
+            All
+          </button>
+          <button
+            className={`px-4 py-2 rounded-full font-semibold border transition-colors duration-200 ${
+              genderTab === "male"
+                ? "bg-green-600 text-white border-green-600"
+                : "bg-white text-gray-700 border-gray-300 hover:bg-green-50"
+            }`}
+            onClick={() => handleGenderTab("male")}
+          >
+            Male
+          </button>
+          <button
+            className={`px-4 py-2 rounded-full font-semibold border transition-colors duration-200 ${
+              genderTab === "female"
+                ? "bg-green-600 text-white border-green-600"
+                : "bg-white text-gray-700 border-gray-300 hover:bg-green-50"
+            }`}
+            onClick={() => handleGenderTab("female")}
+          >
+            Female
+          </button>
+        </div>
+
         <div className="grid grid-cols-2 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8 gap-2 sm:gap-3 md:gap-4">
-          {currentProducts.map((product, index) => {
+          {displayProducts.map((product, index) => {
             // Add null check and fallback ID
             if (!product) return null;
 
@@ -49,6 +113,7 @@ const ProductCard = () => {
               <NavLink
                 key={productId}
                 to={`/product/${productId}`}
+                // onClick={()=>logBehaviour(productId,"viewed")}
                 className="block"
               >
                 <div className="card bg-white shadow-md hover:shadow-xl hover:-translate-y-1 sm:hover:-translate-y-2 transition-all duration-300 group cursor-pointer border border-gray-100 hover:border-green-300 relative overflow-hidden rounded-lg h-full">
@@ -63,7 +128,7 @@ const ProductCard = () => {
 
                   <figure className="overflow-hidden bg-gray-100 relative">
                     <img
-                      src={product.image || "/placeholder-image.jpg"}
+                      src={product.images || "/placeholder-image.jpg"}
                       alt={product.title || "Product"}
                       className="w-full h-20 xs:h-24 sm:h-28 md:h-32 lg:h-36 object-cover group-hover:scale-105 transition-transform duration-300"
                     />
