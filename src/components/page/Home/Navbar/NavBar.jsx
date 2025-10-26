@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react';
-import { FaShoppingCart } from 'react-icons/fa';
-import { IoIosSearch } from 'react-icons/io';
+import FaShoppingCart from '@react-icons/all-files/fa/FaShoppingCart';
+import IoIosSearch from '@react-icons/all-files/io/IoIosSearch';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import useCart from '../../../../Hooks/useCart';
-import { MdOutlineFavorite } from "react-icons/md";
+import FaHeart from '@react-icons/all-files/fa/FaHeart';
 import useWishlist from '../../../../Hooks/useWishlist';
 import { AuthContext } from '../../../../providers/AuthProvider';
 
@@ -277,8 +277,8 @@ const NavBar = () => {
             </NavLink>
 
             <NavLink to="/wishlist" className="relative">
-              <button className="btn btn-ghost text-white">
-                <MdOutlineFavorite className="w-5 h-5" />
+                <button className="btn btn-ghost text-white">
+                <FaHeart className="w-5 h-5" />
               </button>
               <span className="absolute -top-1 -right-1 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-red-500 rounded-full">
                 {wishlistItems.length}

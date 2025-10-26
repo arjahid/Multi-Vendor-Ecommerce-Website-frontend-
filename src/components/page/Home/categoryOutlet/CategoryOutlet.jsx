@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { FaArrowLeft, FaShoppingCart, FaHeart } from 'react-icons/fa';
+import FaArrowLeft from '@react-icons/all-files/fa/FaArrowLeft';
+import FaShoppingCart from '@react-icons/all-files/fa/FaShoppingCart';
+import FaHeart from '@react-icons/all-files/fa/FaHeart';
 import useAxiosPublic from '../../../../Hooks/useAxiousPublic';
 import NavBar from '../Navbar/NavBar';
 

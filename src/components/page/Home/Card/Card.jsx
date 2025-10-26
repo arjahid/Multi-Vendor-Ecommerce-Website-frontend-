@@ -1,5 +1,8 @@
 import React from 'react';
-import { FaShippingFast, FaShoppingCart, FaClock, FaHeadset } from 'react-icons/fa';
+import FaShippingFast from '@react-icons/all-files/fa/FaShippingFast';
+import FaShoppingCart from '@react-icons/all-files/fa/FaShoppingCart';
+import FaClock from '@react-icons/all-files/fa/FaClock';
+import FaHeadset from '@react-icons/all-files/fa/FaHeadset';
 
 const Card = () => {
     const features = [

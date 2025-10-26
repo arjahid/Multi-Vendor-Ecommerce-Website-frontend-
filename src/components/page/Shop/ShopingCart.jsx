@@ -1,6 +1,9 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
-import { FaTrash, FaMinus, FaPlus, FaArrowLeft } from 'react-icons/fa';
+import FaTrash from '@react-icons/all-files/fa/FaTrash';
+import FaMinus from '@react-icons/all-files/fa/FaMinus';
+import FaPlus from '@react-icons/all-files/fa/FaPlus';
+import FaArrowLeft from '@react-icons/all-files/fa/FaArrowLeft';
 import { Link, useNavigate } from 'react-router-dom';
 import NavBar from '../Home/Navbar/NavBar';
 import useCart from '../../../Hooks/useCart';
